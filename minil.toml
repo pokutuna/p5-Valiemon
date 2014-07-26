@@ -1,0 +1,4 @@
+name = "JSON-Schema"
+# badges = ["travis"]
+module_maker="ModuleBuildTiny"
+
