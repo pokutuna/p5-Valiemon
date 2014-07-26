@@ -3,7 +3,34 @@ use 5.008001;
 use strict;
 use warnings;
 
+use JSON::XS;
+
+use JSON::Schema::Validator;
+
+use Class::Accessor::Lite (
+    ro => [qw(schema)],
+);
+
 our $VERSION = "0.01";
+
+# TODO namespace, references
+
+sub new {
+    my ($class, $schema) = @_;
+    return bless {
+        schema => $schema
+    }, $class;
+}
+
+sub validator {
+    my ($self) = @_;
+    return JSON::Schema::Validator->new($self->schema);
+}
+
+sub reference {
+    my ($self) = @_;
+    return 'ROOT'; # TODO implemention
+}
 
 
 
@@ -36,4 +63,3 @@ it under the same terms as Perl itself.
 pokutuna E<lt>popopopopokutuna@gmail.comE<gt>
 
 =cut
-
