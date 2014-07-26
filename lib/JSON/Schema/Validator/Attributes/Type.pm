@@ -10,7 +10,7 @@ use JSON::Schema::Validator::Primitives qw(prim);
 sub attr_name { 'type' }
 
 sub validate {
-    my ($class, $schema, $data, $errors) = @_;
+    my ($class, $validator, $schema, $data) = @_;
     my $types = $schema->{type};
 
     my $is_valid = do {

@@ -11,15 +11,17 @@ use Class::Accessor::Lite (
 );
 
 sub new {
-    my ($class, $schema, $opts) = @_;
+    my ($class, $schema, $options) = @_;
 
     # TODO should validate own schema
-    if ($opts->{validate_schema}) {}
+    if ($options->{validate_schema}) {}
     croak '$schema must be a hashref' unless ref $schema eq 'HASH';
+
+    # TODO reference $ref keyword
 
     return bless {
         schema  => $schema,
-        options => $opts,
+        options => $options,
     }, $class;
 }
 
@@ -31,13 +33,16 @@ sub validate {
     for my $key (keys %{$schema}) {
         my $attr = attr($key);
         if ($attr) {
-            my $is_valid = $attr->validate($schema, $data, $errors);
-            push @$errors, $attr->generate_error unless $is_valid;
+            my $is_valid = $attr->validate($self, $schema, $data, $errors);
+            unless ($is_valid) {
+                push @$errors, $attr->generate_error($schema, $data);
+                next unless $self->options->{collect_errors};
+            }
         }
     }
 
-    my $valid = scalar @$errors ? 0 : 1;
-    return $valid;
+    my $is_valid_all = scalar @$errors ? 0 : 1;
+    return wantarray ? ($is_valid_all, $errors) : $is_valid_all;
 }
 
 1;
