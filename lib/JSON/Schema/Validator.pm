@@ -30,7 +30,10 @@ sub validate {
 
     for my $key (keys %{$schema}) {
         my $attr = attr($key);
-        $attr->validate($schema, $data, $errors) if $attr;
+        if ($attr) {
+            my $is_valid = $attr->validate($schema, $data, $errors);
+            push @$errors, $attr->generate_error unless $is_valid;
+        }
     }
 
     my $valid = scalar @$errors ? 0 : 1;
