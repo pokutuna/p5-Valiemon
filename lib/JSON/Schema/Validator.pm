@@ -5,10 +5,11 @@ use utf8;
 
 use Carp qw(croak);
 use JSON::Schema::Validator::Primitives;
+use JSON::Schema::Validator::Context;
 use JSON::Schema::Validator::Attributes qw(attr);
 
 use Class::Accessor::Lite (
-    ro => [qw(schema options)],
+    ro => [qw(schema options pos)],
 );
 
 sub new {
@@ -18,73 +19,38 @@ sub new {
     if ($options->{validate_schema}) {}
     croak 'schema must be a hashref' unless ref $schema eq 'HASH';
 
-    my $ref = $schema->{'$ref'};
-    return $class->new_from_ref($ref, $schema, $options) if $ref;
-
     return bless {
+        pos => $options->{pos} || '#/', # TODO
         schema => $schema,
         options => $options,
     }, $class;
 }
 
-sub new_from_ref {
-    my ($class, $ref, $schema, $options) = @_;
-
-    # TODO follow the standard dereferencing
-    unless ($ref =~ qr|^#/|) {
-        croak 'This package support only single scope and `#/` referencing';
-    }
-
-    # TODO use json pointer
-    # TODO schema caching
-    my $sub_schema = do {
-        my $paths = do {
-            my @p = split '/', $ref;
-            [ splice @p, 1 ]; # remove '#'
-        };
-        my $root_validator = $options->{root_validator};
-        my $root_schema = $root_validator ? $root_validator->schema : $schema;
-        my $sub = $root_schema;
-        {
-            eval {
-                while (@$paths) {
-                    $sub = $sub->{shift @$paths};
-                }
-            };
-            croak sprintf 'referencing schema `%s` not found', $ref if $@ || !$sub;
-        }
-        $sub;
-    };
-
-    return bless {
-        schema  => $sub_schema,
-        options => $options,
-    };
-}
-
-sub root_validator {
-    my ($self) = @_;
-    return $self->options->{root_validator}
-        ? $self->options->{root_validator} : $self;
-}
-
 sub validate {
-    my ($self, $data) = @_;
+    my ($self, $data, $context) = @_;
     my $schema = $self->schema;
-    my $errors = [];
+
+    $context //= JSON::Schema::Validator::Context->new($self, $schema);
 
     for my $key (keys %{$schema}) {
         my $attr = attr($key);
         if ($attr) {
-            my $is_valid = $attr->is_valid($self, $schema, $data);
+            my ($is_valid, $error) = $attr->is_valid($context, $schema, $data);
             unless ($is_valid) {
-                push @$errors, $attr->generate_error($schema, $data);
-                next unless $self->options->{collect_errors};
+                $context->push_error($error);
+                next; # TODO impliment option like: $self->options->{collect_errors};
             }
         }
     }
 
+    my $errors = $context->errors;
     my $is_valid_all = scalar @$errors ? 0 : 1;
+
+    # debugging
+    if ($context->is_root && !$is_valid_all) {
+        use Data::Dumper; warn Dumper $errors->[0]->as_message ;
+    }
+
     return wantarray ? ($is_valid_all, $errors) : $is_valid_all;
 }
 

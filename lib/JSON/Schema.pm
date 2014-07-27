@@ -2,13 +2,15 @@ package JSON::Schema;
 use 5.008001;
 use strict;
 use warnings;
+use utf8;
 
+use Carp qw(croak);
+use URI;
 use JSON::XS;
-
 use JSON::Schema::Validator;
 
 use Class::Accessor::Lite (
-    ro => [qw(schema)],
+    ro => [qw(schema parent_schema)],
 );
 
 our $VERSION = "0.01";
@@ -16,23 +18,36 @@ our $VERSION = "0.01";
 # TODO namespace, references
 
 sub new {
-    my ($class, $schema) = @_;
+    my ($class, $schema, $parent_schema) = @_;
+
+    # my $id = do {
+    #     if ($schema->{id}) {
+    #         my $uri = URI->new($schema->{id});
+    #     }
+    # };
+
     return bless {
-        schema => $schema
+        schema        => $schema,
+        parent_schema => $parent_schema,
     }, $class;
 }
 
 sub validator {
-    my ($self) = @_;
-    return JSON::Schema::Validator->new($self->schema);
+    my ($self, $options) = @_;
+    return JSON::Schema::Validator->new($self, $options);
 }
 
-sub reference {
+sub as_position {
     my ($self) = @_;
-    return 'ROOT'; # TODO implemention
 }
 
+sub to_hash {
+    my ($self) = @_;
+}
 
+sub to_json {
+    my ($self) = @_;
+}
 
 1;
 __END__

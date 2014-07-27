@@ -10,8 +10,10 @@ use JSON::Schema::Validator::ValidationError;
 use Exporter::Lite;
 our @EXPORT_OK = qw(attr);
 
+# TODO have package mappings instead of dinamic load
 sub attr {
     my ($name) = @_;
+    $name =~ s/^\$//;
     my $class = join '::', __PACKAGE__, (ucfirst $name);
     return $class if is_class_loaded($class);
 
@@ -19,19 +21,12 @@ sub attr {
     return $is_success ? $class : undef;
 }
 
-sub generate_error {
-    my ($class, $schema, $data) = @_;
-    return JSON::Schema::Validator::ValidationError->new(
-        $schema, $data, $class->attr_name
-    );
-}
-
 sub attr_name {
     croak '`attr_name` method must be implemented';
 }
 
 sub is_valid {
-    my ($class, $validator, $schema, $data) = @_;
+    my ($class, $context, $schema, $data) = @_;
     croak '`is_valid` method must be implemented';
 }
 
