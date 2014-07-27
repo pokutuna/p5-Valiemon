@@ -5,30 +5,30 @@ use JSON::XS;
 use_ok 'JSON::Schema::Validator';
 
 subtest 'validate type' => sub {
-    my $validator = JSON::Schema::Validator->new({ type => 'object' });
-    ok !$validator->validate('hello'), 'string is invalid';
-    ok !$validator->validate([]), 'array is invalid';
-    ok !$validator->validate(120), 'integer is invalid';
-    ok !$validator->validate(5.5), 'number is invalid';
-    ok !$validator->validate(undef), 'null is invalid';
-    ok !$validator->validate(1), 'boolean is invalid';
-    ok  $validator->validate({}), 'object is valid!';
+    my $v = JSON::Schema::Validator->new({ type => 'object' });
+    ok !$v->validate('hello'), 'string is invalid';
+    ok !$v->validate([]), 'array is invalid';
+    ok !$v->validate(120), 'integer is invalid';
+    ok !$v->validate(5.5), 'number is invalid';
+    ok !$v->validate(undef), 'null is invalid';
+    ok !$v->validate(1), 'boolean is invalid';
+    ok  $v->validate({}), 'object is valid!';
 };
 
 subtest 'validate properties' => sub {
-    my $validator = JSON::Schema::Validator->new({
+    my $v = JSON::Schema::Validator->new({
         type => 'object',
         properties => {
             name  => { type => 'string'  },
             price => { type => 'integer' },
         },
     });
-    ok  $validator->validate({ name => 'fish', price => 300 });
-    ok !$validator->validate({ name => 'meat', price => [] });
+    ok  $v->validate({ name => 'fish', price => 300 });
+    ok !$v->validate({ name => 'meat', price => [] });
 };
 
 subtest 'validate nested properties' => sub {
-    my $validator = JSON::Schema::Validator->new({
+    my $v = JSON::Schema::Validator->new({
         type => 'object',
         properties => {
             name  => {
@@ -41,22 +41,22 @@ subtest 'validate nested properties' => sub {
             },
         },
     });
-    ok  $validator->validate({
+    ok  $v->validate({
         name => {
             first => 'ane',
             last  => 'hosii',
             age   => 14,
         }
     });
-    ok !$validator->validate({ name => [] });
-    ok !$validator->validate({
+    ok !$v->validate({ name => [] });
+    ok !$v->validate({
         name => {
             # none `first`
             last => 'hoge',
             age  => '18',
         }
     });
-    ok !$validator->validate({
+    ok !$v->validate({
         name => {
             first => 'foo',
             last  => 'bar',
@@ -66,7 +66,7 @@ subtest 'validate nested properties' => sub {
 };
 
 subtest 'validation with $ref refereincing' => sub {
-    my $validator = JSON::Schema::Validator->new({
+    my $v = JSON::Schema::Validator->new({
         type => 'object',
         definitions => {
             person => {
@@ -82,18 +82,18 @@ subtest 'validation with $ref refereincing' => sub {
             age  => { type => 'integer' },
         },
     });
-    ok $validator->validate({
+    ok $v->validate({
         name => { first => 'foo', last => 'bar' },
         age  => 12
     });
-    ok !$validator->validate({
+    ok !$v->validate({
         name => { first => 'foo' },
         age  => 10,
     });
 };
 
 subtest 'validate with nested $ref referencing' => sub {
-    my $validator = JSON::Schema::Validator->new({
+    my $v = JSON::Schema::Validator->new({
         type => 'object',
         definitions => {
             person => {
@@ -119,7 +119,7 @@ subtest 'validate with nested $ref referencing' => sub {
         },
     });
 
-    ok $validator->validate({
+    ok $v->validate({
         person => {
             first   => 'ababa',
             last    => 'abebe',
@@ -127,7 +127,7 @@ subtest 'validate with nested $ref referencing' => sub {
         },
     });
 
-    ok !$validator->validate({
+    ok !$v->validate({
         person => {
             first   => 'a',
             last    => 'a',
@@ -135,12 +135,33 @@ subtest 'validate with nested $ref referencing' => sub {
         },
     });
 
-    ok !$validator->validate({
+    ok !$v->validate({
         person => {
             first   => 'a',
             address => { code => 4, street => 'kegani' },
         },
     });
+};
+
+subtest 'validate array (schema)' => sub {
+    my $v = JSON::Schema::Validator->new({
+        type => 'array',
+        items => { type => 'integer' },
+    });
+
+    ok  $v->validate([1, 2, 3]);
+    ok !$v->validate([1, 2, 3.5]);
+    ok !$v->validate([{ a => 'hoge' }]);
+};
+
+subtest 'validate array (index)' => sub {
+    my $v = JSON::Schema::Validator->new({
+        type => 'array',
+        items => [{type => 'integer'}, {type => 'object'}, {type => 'array'}],
+    });
+
+    ok  $v->validate([1, {}, []]);
+    ok !$v->validate([1, [], 3.5]);
 };
 
 done_testing;

@@ -48,7 +48,8 @@ sub validate {
 
     # debugging
     if ($context->is_root && !$is_valid_all) {
-        use Data::Dumper; warn Dumper $errors->[0]->as_message ;
+        # use Data::Dumper; warn Dumper $errors->[0]->as_message ;
+        use Data::Dumper; warn Dumper [ map { $_->as_message } @$errors ];
     }
 
     return wantarray ? ($is_valid_all, $errors) : $is_valid_all;

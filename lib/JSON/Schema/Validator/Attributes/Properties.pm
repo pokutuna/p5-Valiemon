@@ -21,7 +21,7 @@ sub is_valid {
             my $sub_schema = $properties->{$key};
 
             my $v = $context->in($key, sub {
-                my $v = JSON::Schema::Validator->new(
+                JSON::Schema::Validator->new(
                     $sub_schema,
                     $context->rv->options, # inherit
                 )->validate($sub_data, $context);
