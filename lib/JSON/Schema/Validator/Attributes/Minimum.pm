@@ -9,8 +9,9 @@ sub attr_name { 'minimum' }
 sub is_valid {
     my ($class, $context, $schema, $data) = @_;
     my $min = $schema->{minimum};
+    my $exclusive = $schema->{exclusiveMinimum} || 0;
     $context->in_attr($class, sub {
-        $min <= $data ? 1 : 0;
+        $exclusive ? $min < $data : $min <= $data;
     });
 }
 

@@ -181,13 +181,13 @@ subtest 'minimum & maximum' => sub {
     my $v = JSON::Schema::Validator->new({
         type => 'object',
         properties => {
-            year => { type => 'integer', minimum => 1970 },
+            year => { type => 'integer', minimum => 1970, exclusiveMinimum => 1 },
             age  => { type => 'integer', minimum => 0, maximum => 3000 },
         },
     });
     ok  $v->validate({ year => 2014, age => 25 });
-    ok  $v->validate({ year => 1970, age => 3000 });
-    ok !$v->validate({ year => 1970, age => 3001 });
+    ok !$v->validate({ year => 1970, age => 3000 });
+    ok !$v->validate({ year => 1971, age => 3001 });
 };
 
 
