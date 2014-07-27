@@ -9,7 +9,7 @@ use JSON::Schema::Validator;
 
 sub attr_name { 'properties' }
 
-sub validate {
+sub is_valid {
     my ($class, $validator, $schema, $data) = @_;
 
     return 1 unless $validator->prims->is_object($data); # ignore
@@ -19,12 +19,13 @@ sub validate {
         my $key = $_;
         my $sub_data = $data->{$key};
         my $sub_schema = $properties->{$key};
-        JSON::Schema::Validator->new(
+        my $v = JSON::Schema::Validator->new(
             $sub_schema, +{
                 root_validator => $validator->root_validator,
                 %{$validator->options},
             }
         )->validate($sub_data);
+        $v;
     } (keys %$properties);
 
     return $is_valid ? 1 : 0;

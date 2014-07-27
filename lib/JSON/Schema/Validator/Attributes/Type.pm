@@ -8,7 +8,7 @@ use List::MoreUtils qw(any);
 
 sub attr_name { 'type' }
 
-sub validate {
+sub is_valid {
     my ($class, $validator, $schema, $data) = @_;
     my $types = $schema->{type};
 

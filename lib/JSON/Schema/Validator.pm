@@ -36,6 +36,7 @@ sub new_from_ref {
     }
 
     # TODO use json pointer
+    # TODO schema caching
     my $sub_schema = do {
         my $paths = do {
             my @p = split '/', $ref;
@@ -63,8 +64,8 @@ sub new_from_ref {
 
 sub root_validator {
     my ($self) = @_;
-    return $self->{options}->{root_validator}
-        ? $self->{options}->{root_validator} : $self;
+    return $self->options->{root_validator}
+        ? $self->options->{root_validator} : $self;
 }
 
 sub validate {
@@ -75,7 +76,7 @@ sub validate {
     for my $key (keys %{$schema}) {
         my $attr = attr($key);
         if ($attr) {
-            my $is_valid = $attr->validate($self, $schema, $data, $errors);
+            my $is_valid = $attr->is_valid($self, $schema, $data);
             unless ($is_valid) {
                 push @$errors, $attr->generate_error($schema, $data);
                 next unless $self->options->{collect_errors};

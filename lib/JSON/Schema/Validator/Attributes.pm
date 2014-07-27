@@ -30,4 +30,9 @@ sub attr_name {
     croak '`attr_name` method must be implemented';
 }
 
+sub is_valid {
+    my ($class, $validator, $schema, $data) = @_;
+    croak '`is_valid` method must be implemented';
+}
+
 1;
