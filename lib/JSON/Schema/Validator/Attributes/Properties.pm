@@ -19,9 +19,11 @@ sub validate {
         my $key = $_;
         my $sub_data = $data->{$key};
         my $sub_schema = $properties->{$key};
-
         JSON::Schema::Validator->new(
-            $sub_schema, $validator->options # inherit options
+            $sub_schema, +{
+                root_validator => $validator->root_validator,
+                %{$validator->options},
+            }
         )->validate($sub_data);
     } (keys %$properties);
 

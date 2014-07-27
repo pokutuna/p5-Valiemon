@@ -15,12 +15,12 @@ sub new {
 
 sub is_object {
     my ($self, $obj) = @_;
-    ref $obj eq 'HASH' ? 1 : 0;
+    (defined $obj && ref $obj eq 'HASH') ? 1 : 0;
 }
 
 sub is_array {
     my ($self, $obj) = @_;
-    ref $obj eq 'ARRAY' ? 1 : 0;
+    (defined $obj && ref $obj eq 'ARRAY') ? 1 : 0;
 }
 
 sub is_string {
@@ -30,12 +30,12 @@ sub is_string {
 
 sub is_number {
     my ($self, $obj) = @_;
-    looks_like_number($obj) ? 1 : 0;
+    (defined $obj && looks_like_number($obj)) ? 1 : 0;
 }
 
 sub is_integer {
     my ($self, $obj) = @_;
-    $obj =~ qr/^-?\d+$/ ? 1 : 0; # TODO find more better way
+    (defined $obj && $obj =~ qr/^-?\d+$/) ? 1 : 0; # TODO find more better way
 }
 
 sub is_bool {
@@ -47,12 +47,12 @@ sub is_bool {
 
 sub is_boolean_perl {
     my ($self, $obj) = @_;
-    ($obj == 1 || $obj == 0) ? 1 : 0; # TODO invalidate 0.0
+    (defined $obj && ($obj == 1 || $obj == 0)) ? 1 : 0; # TODO invalidate 0.0
 }
 
 sub is_boolean_json {
     my ($self, $obj) = @_;
-    is_bool($obj) ? 1 : 0;
+    (defined $obj && is_bool($obj)) ? 1 : 0;
 }
 
 sub is_null {

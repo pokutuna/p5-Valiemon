@@ -65,4 +65,82 @@ subtest 'validate nested properties' => sub {
     });
 };
 
+subtest 'validation with $ref refereincing' => sub {
+    my $validator = JSON::Schema::Validator->new({
+        type => 'object',
+        definitions => {
+            person => {
+                type => 'object',
+                properties => {
+                    first => { type => 'string' },
+                    last  => { type => 'string' },
+                },
+            },
+        },
+        properties => {
+            name => { '$ref' => '#/definitions/person' },
+            age  => { type => 'integer' },
+        },
+    });
+    ok $validator->validate({
+        name => { first => 'foo', last => 'bar' },
+        age  => 12
+    });
+    ok !$validator->validate({
+        name => { first => 'foo' },
+        age  => 10,
+    });
+};
+
+subtest 'validate with nested $ref referencing' => sub {
+    my $validator = JSON::Schema::Validator->new({
+        type => 'object',
+        definitions => {
+            person => {
+                type => 'object',
+                properties => {
+                    first   => { type => 'string' },
+                    last    => { type => 'string' },
+                    address => { '$ref' => '#/definitions/person/definitions/address' },
+                },
+                definitions => {
+                    address => {
+                        type   => 'object',
+                        properties => {
+                            code   => { type => 'integer'},
+                            street => { type => 'string'},
+                        }
+                    },
+                },
+            },
+        },
+        properties => {
+            person => { '$ref' => '#/definitions/person' },
+        },
+    });
+
+    ok $validator->validate({
+        person => {
+            first   => 'ababa',
+            last    => 'abebe',
+            address => { code => 123, street => 'unadon' },
+        },
+    });
+
+    ok !$validator->validate({
+        person => {
+            first   => 'a',
+            last    => 'a',
+            address => { code => 345.1, street => 'hamachi' },
+        },
+    });
+
+    ok !$validator->validate({
+        person => {
+            first   => 'a',
+            address => { code => 4, street => 'kegani' },
+        },
+    });
+};
+
 done_testing;

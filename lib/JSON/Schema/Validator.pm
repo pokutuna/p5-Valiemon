@@ -8,7 +8,7 @@ use JSON::Schema::Validator::Primitives;
 use JSON::Schema::Validator::Attributes qw(attr);
 
 use Class::Accessor::Lite (
-    ro => [qw(schema options prims)],
+    ro => [qw(schema options)],
 );
 
 sub new {
@@ -16,17 +16,55 @@ sub new {
 
     # TODO should validate own schema
     if ($options->{validate_schema}) {}
-    croak '$schema must be a hashref' unless ref $schema eq 'HASH';
+    croak 'schema must be a hashref' unless ref $schema eq 'HASH';
 
-    # TODO reference $ref keyword
-
-    my $prims = JSON::Schema::Validator::Primitives->new($options);
+    my $ref = $schema->{'$ref'};
+    return $class->new_from_ref($ref, $schema, $options) if $ref;
 
     return bless {
-        schema  => $schema,
+        schema => $schema,
         options => $options,
-        prims   => $prims,
     }, $class;
+}
+
+sub new_from_ref {
+    my ($class, $ref, $schema, $options) = @_;
+
+    # TODO follow the standard dereferencing
+    unless ($ref =~ qr|^#/|) {
+        croak 'This package support only single scope and `#/` referencing';
+    }
+
+    # TODO use json pointer
+    my $sub_schema = do {
+        my $paths = do {
+            my @p = split '/', $ref;
+            [ splice @p, 1 ]; # remove '#'
+        };
+        my $root_validator = $options->{root_validator};
+        my $root_schema = $root_validator ? $root_validator->schema : $schema;
+        my $sub = $root_schema;
+        {
+            eval {
+                while (@$paths) {
+                    $sub = $sub->{shift @$paths};
+                }
+            };
+            croak sprintf 'referencing schema `%s` not found', $ref if $@ || !$sub;
+        }
+        $sub;
+    };
+
+    return bless {
+        schema  => $sub_schema,
+        options => $options,
+    };
+}
+
+sub root_validator {
+    my ($self) = @_;
+    return $self->{options}->{root_validator}
+        ? $self->{options}->{root_validator} : $self;
 }
 
 sub validate {
@@ -47,6 +85,13 @@ sub validate {
 
     my $is_valid_all = scalar @$errors ? 0 : 1;
     return wantarray ? ($is_valid_all, $errors) : $is_valid_all;
+}
+
+sub prims {
+    my ($self) = @_;
+    return $self->{prims} //= JSON::Schema::Validator::Primitives->new(
+        $self->options
+    );
 }
 
 1;
