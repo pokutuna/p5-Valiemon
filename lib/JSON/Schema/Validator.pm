@@ -4,10 +4,11 @@ use warnings;
 use utf8;
 
 use Carp qw(croak);
+use JSON::Schema::Validator::Primitives;
 use JSON::Schema::Validator::Attributes qw(attr);
 
 use Class::Accessor::Lite (
-    ro => [qw(schema options)],
+    ro => [qw(schema options prims)],
 );
 
 sub new {
@@ -19,9 +20,12 @@ sub new {
 
     # TODO reference $ref keyword
 
+    my $prims = JSON::Schema::Validator::Primitives->new($options);
+
     return bless {
         schema  => $schema,
         options => $options,
+        prims   => $prims,
     }, $class;
 }
 

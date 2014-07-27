@@ -5,7 +5,6 @@ use utf8;
 use parent qw(JSON::Schema::Validator::Attributes);
 
 use List::MoreUtils qw(any);
-use JSON::Schema::Validator::Primitives qw(prim);
 
 sub attr_name { 'type' }
 
@@ -15,18 +14,18 @@ sub validate {
 
     my $is_valid = do {
         if (ref $types eq 'ARRAY') {
-            any { $class->_check($_, $data) } @$types
+            any { $class->_check($validator, $_, $data) } @$types
         } else {
-            $class->_check($types, $data);
+            $class->_check($validator, $types, $data);
         }
     };
     return $is_valid ? 1 : 0;
 }
 
 sub _check {
-    my ($class, $type, $data) = @_;
+    my ($class, $validator, $type, $data) = @_;
     my $method = 'is_' . $type;
-    prim->can($method) && prim->$method($data) ? 1 : 0;
+    $validator->prims->can($method) && $validator->prims->$method($data) ? 1 : 0;
 }
 
 1;

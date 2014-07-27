@@ -6,14 +6,13 @@ use parent qw(JSON::Schema::Validator::Attributes);
 
 use List::MoreUtils qw(all);
 use JSON::Schema::Validator;
-use JSON::Schema::Validator::Primitives qw(prim);
 
 sub attr_name { 'properties' }
 
 sub validate {
     my ($class, $validator, $schema, $data) = @_;
 
-    return 1 unless prim->is_object($data); # ignore
+    return 1 unless $validator->prims->is_object($data); # ignore
 
     my $properties = $schema->{properties};
     my $is_valid = all {

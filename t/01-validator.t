@@ -11,7 +11,7 @@ subtest 'validate type' => sub {
     ok !$validator->validate(120), 'integer is invalid';
     ok !$validator->validate(5.5), 'number is invalid';
     ok !$validator->validate(undef), 'null is invalid';
-    # TODO boolean
+    ok !$validator->validate(1), 'boolean is invalid';
     ok  $validator->validate({}), 'object is valid!';
 };
 
