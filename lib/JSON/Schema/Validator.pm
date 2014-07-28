@@ -73,15 +73,15 @@ __END__
 
 =head1 NAME
 
-JSON::Schema - It's new $module
+JSON::Schema::Validator - It's new $module
 
 =head1 SYNOPSIS
 
-    use JSON::Schema;
+    use JSON::Schema::Validator;
 
 =head1 DESCRIPTION
 
-JSON::Schema is ...
+JSON::Schema::Validator is ...
 
 =head1 LICENSE
 
