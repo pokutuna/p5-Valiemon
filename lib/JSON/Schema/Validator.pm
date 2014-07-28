@@ -10,7 +10,7 @@ use JSON::Schema::Validator::Context;
 use JSON::Schema::Validator::Attributes qw(attr);
 
 use Class::Accessor::Lite (
-    ro => [qw(schema options pos)],
+    ro => [qw(schema options pos schema_cache)],
 );
 
 our $VERSION = "0.01";
@@ -23,8 +23,9 @@ sub new {
     croak 'schema must be a hashref' unless ref $schema eq 'HASH';
 
     return bless {
-        schema => $schema,
-        options => $options,
+        schema       => $schema,
+        options      => $options,
+        schema_cache => +{},
     }, $class;
 }
 
@@ -55,6 +56,13 @@ sub prims {
     return $self->{prims} //= JSON::Schema::Validator::Primitives->new(
         $self->options
     );
+}
+
+sub ref_schema_cache {
+    my ($self, $ref, $schema) = @_;
+    return defined $schema
+        ? $self->schema_cache->{$ref} = $schema
+        : $self->{schema_cache}->{ref};
 }
 
 1;

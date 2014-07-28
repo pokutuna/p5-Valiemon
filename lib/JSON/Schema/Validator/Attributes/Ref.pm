@@ -18,11 +18,10 @@ sub is_valid {
     }
 
     # TODO use json pointer
-    # TODO schema caching
-    my $sub_schema = do {
+    my $sub_schema = $context->rv->ref_schema_cache($ref) || do {
         my $paths = do {
             my @p = split '/', $ref;
-            [ splice @p, 1 ];           # remove '#'
+            [ splice @p, 1 ]; # remove '#'
         };
         my $ss = $context->root_schema;
         {
@@ -30,6 +29,7 @@ sub is_valid {
             croak sprintf 'referencing `%s` cause error', $ref if $@;
             croak sprintf 'schema `%s` not found', $ref unless $ss;
         }
+        $context->rv->ref_schema_cache($ref, $ss); # caching
         $ss;
     };
 
