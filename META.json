@@ -42,6 +42,12 @@
       },
       "runtime" : {
          "requires" : {
+            "Class::Accessor::Lite" : "0",
+            "Class::Load" : "0",
+            "JSON::XS" : "0",
+            "List::MoreUtils" : "0",
+            "Scalar::Util" : "0",
+            "Types::Serialiser" : "0",
             "perl" : "5.008001"
          }
       },
