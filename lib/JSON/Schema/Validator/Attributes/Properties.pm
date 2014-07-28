@@ -20,13 +20,9 @@ sub is_valid {
             my $sub_data = $data->{$key};
             my $sub_schema = $properties->{$key};
 
-            my $v = $context->in($key, sub {
-                JSON::Schema::Validator->new(
-                    $sub_schema,
-                    $context->rv->options, # inherit
-                )->validate($sub_data, $context);
+            $context->in($key, sub {
+                $context->sub_validator($sub_schema)->validate($sub_data, $context);
             });
-            $v;
         } (keys %$properties);
         $is_valid
     });

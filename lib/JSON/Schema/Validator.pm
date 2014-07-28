@@ -23,7 +23,6 @@ sub new {
     croak 'schema must be a hashref' unless ref $schema eq 'HASH';
 
     return bless {
-        pos => $options->{pos} || '#/', # TODO
         schema => $schema,
         options => $options,
     }, $class;
@@ -41,21 +40,14 @@ sub validate {
             my ($is_valid, $error) = $attr->is_valid($context, $schema, $data);
             unless ($is_valid) {
                 $context->push_error($error);
-                next; # TODO impliment option like: $self->options->{collect_errors};
+                next;
             }
         }
     }
 
     my $errors = $context->errors;
-    my $is_valid_all = scalar @$errors ? 0 : 1;
-
-    # debugging
-    if ($context->is_root && !$is_valid_all) {
-        # use Data::Dumper; warn Dumper $errors->[0]->as_message ;
-        use Data::Dumper; warn Dumper [ map { $_->as_message } @$errors ];
-    }
-
-    return wantarray ? ($is_valid_all, $errors) : $is_valid_all;
+    my $is_valid = scalar @$errors ? 0 : 1;
+    return wantarray ? ($is_valid, $errors->[0]) : $is_valid;
 }
 
 sub prims {

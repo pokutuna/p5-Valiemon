@@ -34,11 +34,7 @@ sub is_valid {
     };
 
     $context->in_attr($class, sub {
-        my $is_valid = JSON::Schema::Validator->new(
-            $sub_schema,
-            $context->rv->options,
-        )->validate($data, $context);
-        $is_valid;
+        $context->sub_validator($sub_schema)->validate($data, $context);
     });
 
 }

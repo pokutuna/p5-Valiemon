@@ -10,10 +10,9 @@ use JSON::Schema::Validator::ValidationError;
 use Exporter::Lite;
 our @EXPORT_OK = qw(attr);
 
-# TODO have package mappings instead of dinamic load
 sub attr {
     my ($name) = @_;
-    $name =~ s/^\$//;
+    $name =~ s/^\$//; # TODO have package mappings instead of dinamic load
     my $class = join '::', __PACKAGE__, (ucfirst $name);
     return $class if is_class_loaded($class);
 

@@ -64,9 +64,18 @@ sub in_attr ($&) {
 sub in ($&) {
     my ($self, $pos, $code) = @_;
     $self->push_pos($pos);
-    my @res = $code->();
+    my $res = $code->();
     $self->pop_pos();
-    return wantarray ? @res : $res[0];
+    return $res;
+}
+
+sub sub_validator {
+    my ($self, $sub_schema) = @_;
+    require JSON::Schema::Validator;
+    return JSON::Schema::Validator->new(
+        $sub_schema,
+        $self->rv->options, # inherit options
+    );
 }
 
 1;
