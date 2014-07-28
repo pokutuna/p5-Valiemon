@@ -36,5 +36,6 @@ sub is_valid {
     $context->in_attr($class, sub {
         $context->sub_validator($sub_schema)->validate($data, $context);
     });
-
 }
+
+1;
