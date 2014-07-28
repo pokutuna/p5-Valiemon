@@ -1,4 +1,4 @@
-name = "JSON-Schema"
+name = "JSON-Schema-Validator"
 # badges = ["travis"]
 module_maker="ModuleBuildTiny"
 

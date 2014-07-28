@@ -12,7 +12,7 @@
       "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
       "version" : "2"
    },
-   "name" : "JSON-Schema",
+   "name" : "JSON-Schema-Validator",
    "no_index" : {
       "directory" : [
          "t",
