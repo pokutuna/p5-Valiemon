@@ -9,7 +9,7 @@ use Types::Serialiser qw(is_bool);
 sub new {
     my ($class, $options) = @_;
     return bless {
-        options => $options,
+        options => $options || +{},
     }, $class;
 }
 
@@ -45,9 +45,9 @@ sub is_bool {
         : $self->is_boolean_perl($obj)
 }
 
-sub is_boolean_perl {
+sub is_boolean_perl { # u-n
     my ($self, $obj) = @_;
-    (defined $obj && ($obj == 1 || $obj == 0)) ? 1 : 0; # TODO invalidate 0.0
+    (defined $obj && looks_like_number($obj) && ($obj == 1 || $obj == 0)) ? 1 : 0; # TODO invalidate 0.0
 }
 
 sub is_boolean_json {
