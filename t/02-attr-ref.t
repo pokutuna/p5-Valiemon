@@ -18,6 +18,7 @@ subtest 'validation with $ref referencing' => sub {
                     first => { type => 'string' },
                     last  => { type => 'string' },
                 },
+                required => [qw(first last)],
             },
         },
         properties => {
@@ -37,7 +38,7 @@ subtest 'validation with $ref referencing' => sub {
         age  => 10,
     });
     ok !$res;
-    is $err->position, '/properties/name/$ref/properties/last/type';
+    is $err->position, '/properties/name/$ref/required';
 };
 
 subtest 'validate with nested $ref referencing' => sub {
@@ -48,10 +49,11 @@ subtest 'validate with nested $ref referencing' => sub {
             person => {
                 type => 'object',
                 properties => {
-                    first   => { type => 'string' },
-                    last    => { type => 'string' },
-                    address => { '$ref' => '#/definitions/person/definitions/address' },
+                    first    => { type => 'string' },
+                    last     => { type => 'string' },
+                    address  => { '$ref' => '#/definitions/person/definitions/address' },
                 },
+                required => [qw(first last address)],
                 definitions => {
                     address => {
                         type   => 'object',
@@ -91,11 +93,22 @@ subtest 'validate with nested $ref referencing' => sub {
     ($res, $err) = $v->validate({
         person => {
             first   => 'a',
+            last    => [],
             address => { code => 4, street => 'kegani' },
         },
     });
     ok !$res;
     is $err->position, '/properties/person/$ref/properties/last/type';
+
+    ($res, $err) = $v->validate({
+        person => {
+            first   => 'a',
+            address => { code => 4, street => 'kegani' },
+        },
+    });
+    ok !$res;
+    is $err->position, '/properties/person/$ref/required';
+
 };
 
 done_testing;

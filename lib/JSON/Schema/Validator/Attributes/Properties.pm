@@ -4,6 +4,7 @@ use warnings;
 use utf8;
 use parent qw(JSON::Schema::Validator::Attributes);
 
+use Carp qw(croak);
 use List::MoreUtils qw(all);
 use JSON::Schema::Validator;
 
@@ -15,16 +16,27 @@ sub is_valid {
         return 1 unless ref $data eq 'HASH'; # ignore
 
         my $properties = $schema->{properties};
-        my $is_valid = all {
-            my $key = $_;
-            my $sub_data = $data->{$key};
-            my $sub_schema = $properties->{$key};
+        unless (ref $properties eq 'HASH') {
+            croak sprintf '`properties` must be an object at %s', $context->position
+        }
 
-            $context->in($key, sub {
+        my $is_valid = 1;
+        for my $prop (keys %$properties) {
+            next unless exists $data->{$prop}; # skip
+
+            my $sub_data = $data->{$prop};
+            my $sub_schema = $properties->{$prop};
+            my $res = $context->in($prop, sub {
                 $context->sub_validator($sub_schema)->validate($sub_data, $context);
             });
-        } (keys %$properties);
-        $is_valid
+
+            if (!$res) {
+                $is_valid = 0;
+                last;
+            }
+        }
+
+        $is_valid;
     });
 }
 

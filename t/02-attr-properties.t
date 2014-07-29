@@ -62,8 +62,8 @@ subtest 'validate nested properties' => sub {
             age  => '18',
         }
     });
-    ok !$res; # TODO it's not ok until `required` implementing
-    is $err->position, '/properties/name/properties/first/type';
+    ok $res, 'first is not required';
+    is $err, undef;
 
     ($res, $err) = $v->validate({
         name => {

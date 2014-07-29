@@ -9,6 +9,23 @@ use_ok 'JSON::Schema::Validator::Attributes::Required';
 
 subtest 'validate required' => sub {
     my ($res, $error);
+    my $v = JSON::Schema::Validator->new({ required => [qw(key)] });
+
+    ($res, $error) = $v->validate({ key => 'hoge' });
+    ok $res, 'required constraint satisifed';
+    is $error, undef;
+
+    ($res, $error) = $v->validate({ key => {} });
+    ok $res, 'any type ok';
+    is $error, undef;
+
+    ($res, $error) = $v->validate({ ke => {} });
+    ok !$res;
+    is $error->position, '/required';
+};
+
+subtest 'validate required with object' => sub {
+    my ($res, $error);
     my $v = JSON::Schema::Validator->new({
         type => 'object',
         properties => {
