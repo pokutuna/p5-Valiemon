@@ -15,9 +15,9 @@ sub is_valid {
 
         my $is_valid = do {
             if (ref $types eq 'ARRAY') {
-                any { $class->_check($context->rv, $_, $data) } @$types
+                any { $class->_check($context->prims, $_, $data) } @$types
             } else {
-                $class->_check($context->rv, $types, $data);
+                $class->_check($context->prims, $types, $data);
             }
         };
         $is_valid;
@@ -25,9 +25,9 @@ sub is_valid {
 }
 
 sub _check {
-    my ($class, $validator, $type, $data) = @_;
+    my ($class, $prims, $type, $data) = @_;
     my $method = 'is_' . $type;
-    $validator->prims->can($method) && $validator->prims->$method($data) ? 1 : 0;
+    $prims->can($method) && $prims->$method($data) ? 1 : 0;
 }
 
 1;

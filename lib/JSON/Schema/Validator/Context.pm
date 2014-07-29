@@ -22,6 +22,8 @@ sub new {
 sub rv { $_[0]->root_validator }
 sub rs { $_[0]->root_schema }
 
+sub prims { $_[0]->root_validator->prims } # TODO refactor
+
 sub push_error {
     my ($self, $error) = @_;
     push @{$self->errors}, $error;
