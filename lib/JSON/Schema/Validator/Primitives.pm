@@ -5,6 +5,7 @@ use utf8;
 
 use Scalar::Util qw(looks_like_number);
 use Types::Serialiser qw(is_bool);
+use Test::Deep qw(eq_deeply);
 
 sub new {
     my ($class, $options) = @_;
@@ -58,6 +59,17 @@ sub is_boolean_json {
 sub is_null {
     my ($self, $obj) = @_;
     !defined($obj) ? 1 : 0;
+}
+
+# json schema core: 3.6 JSON value equality
+sub is_equal {
+    my ($self, $a, $b) = @_;
+    return 1 if !defined($a) && !defined($b);
+    return 1 if $self->is_bool($a) && $self->is_bool($b) && $a == $b;
+    return 1 if $self->is_string($a) && $self->is_string($b) && "$a" eq "$b"; # ah
+    return 1 if $self->is_number($a) && $self->is_number($b) && $a == $b;
+    return 1 if eq_deeply($a, $b); # array & object
+    return 0;
 }
 
 1;

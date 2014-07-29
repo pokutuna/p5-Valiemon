@@ -80,7 +80,6 @@ subtest 'is_bool' => sub {
     ok !$p->is_bool(4);
     ok  $p->is_bool(1);
     ok !$p->is_bool(undef);
-
     TODO : {
         local $TODO = 'invalidate 0.0';
         ok !$p->is_bool(0.0);
@@ -96,6 +95,72 @@ subtest 'is_null' => sub {
     ok !$p->is_null(4);
     ok !$p->is_null(1);
     ok  $p->is_null(undef);
+};
+
+subtest 'is_equal' => sub {
+    my $p = JSON::Schema::Validator::Primitives->new;
+
+    note 'null';
+    ok !$p->is_equal(undef, {});
+    ok !$p->is_equal(undef, []);
+    ok !$p->is_equal(undef, '');
+    ok !$p->is_equal(undef, 0.0);
+    ok !$p->is_equal(undef, 0);
+    ok !$p->is_equal(undef, 1);
+    ok  $p->is_equal(undef, undef);
+
+    note 'bool';
+    ok !$p->is_equal(0, {});
+    ok !$p->is_equal(0, []);
+    ok !$p->is_equal(0, '');
+    TODO : {
+        local $TODO = 'implement boolean handling';
+        ok !$p->is_equal(0, 0.0);
+        ok !$p->is_equal(0, 0); # integer
+    }
+    ok  $p->is_equal(0, 0); # bool
+    ok !$p->is_equal(0, undef);
+
+    note 'string';
+    ok !$p->is_equal('', {});
+    ok !$p->is_equal('', []);
+    ok  $p->is_equal('', '');
+    ok  $p->is_equal('hello', 'hello');
+    ok !$p->is_equal('', 0.0);
+    ok !$p->is_equal('', 0);
+    ok !$p->is_equal('', 1);
+    ok !$p->is_equal('', undef);
+
+    note 'number';
+    ok !$p->is_equal(0, {});
+    ok !$p->is_equal(0, []);
+    ok !$p->is_equal(0, '');
+    ok  $p->is_equal(0, 0.0); # it's ok
+    ok  $p->is_equal(0, 0);
+    ok !$p->is_equal(0, 1);
+    ok !$p->is_equal(0, undef);
+
+    note 'array';
+    ok !$p->is_equal([], {});
+    ok  $p->is_equal([], []);
+    ok  $p->is_equal([1, 2, 3], [1, 2, 3]);
+    ok !$p->is_equal([1, 2, 3], [1, 3, 2]);
+    ok !$p->is_equal([], '');
+    ok !$p->is_equal([], 0.0);
+    ok !$p->is_equal([], 0);
+    ok !$p->is_equal([], 1);
+    ok !$p->is_equal([], undef);
+
+    note 'object';
+    ok  $p->is_equal({}, {});
+    ok  $p->is_equal({ a => 1, b => 2 }, { b => 2, a => 1 });
+    ok !$p->is_equal({ a => 1, b => 1 }, { b => 2, a => 1 });
+    ok !$p->is_equal({}, []);
+    ok !$p->is_equal({}, '');
+    ok !$p->is_equal({}, 0.0);
+    ok !$p->is_equal({}, 0);
+    ok !$p->is_equal({}, 1);
+    ok !$p->is_equal({}, undef);
 };
 
 done_testing;
