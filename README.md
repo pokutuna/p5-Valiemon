@@ -10,30 +10,28 @@ So there are some unimplemented features, and module api will be changed.
 
 # SYNOPSIS
 
-```perl
-use JSON::Schema::Validator;
+    use JSON::Schema::Validator;
 
-# create instance with schema definition
-my $validator = JSON::Schema::Validator->new({
-    type => 'object',
-    properties => {
-        name  => { type => 'string'  },
-        price => { type => 'integer' },
-    },
-    requried => ['name', 'price'],
-});
+    # create instance with schema definition
+    my $validator = JSON::Schema::Validator->new({
+        type => 'object',
+        properties => {
+            name  => { type => 'string'  },
+            price => { type => 'integer' },
+        },
+        requried => ['name', 'price'],
+    });
 
-# validate data
-my ($res, $error);
-($res, $error) = $validator->validate({ name => 'unadon', price => 1200 });
-# $res   => 1
-# $error => undef
+    # validate data
+    my ($res, $error);
+    ($res, $error) = $validator->validate({ name => 'unadon', price => 1200 });
+    # $res   => 1
+    # $error => undef
 
-($res, $error) = $validator->validate({ name => 'tendon', price => 'hoge' });
-# $res   => 0
-# $error => object JSON::Schema::Validation::Error
-# $error->position => '/properties/price/type'
-```
+    ($res, $error) = $validator->validate({ name => 'tendon', price => 'hoge' });
+    # $res   => 0
+    # $error => object JSON::Schema::Validation::Error
+    # $error->position => '/properties/price/type'
 
 # LICENSE
 
