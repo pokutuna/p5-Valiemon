@@ -2,6 +2,7 @@ requires 'perl', '5.008001';
 
 requires 'Class::Accessor::Lite';
 requires 'Class::Load';
+requires 'Clone';
 requires 'JSON::XS';
 requires 'List::MoreUtils';
 requires 'Scalar::Util';

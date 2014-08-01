@@ -19,7 +19,13 @@ sub is_valid {
         if (ref $required ne 'ARRAY' || scalar @$required < 1) {
             croak sprintf '`required` must be an array and have at leas one element at %s', $context->position
         }
-        all { exists $data->{$_} } @$required;
+        all {
+            my $has_default = do {
+                my $prop_def = $schema->{properties};
+                $prop_def && $prop_def->{$_} && $prop_def->{$_}->{default};
+            };
+            $has_default || exists $data->{$_}
+        } @$required;
     });
 }
 

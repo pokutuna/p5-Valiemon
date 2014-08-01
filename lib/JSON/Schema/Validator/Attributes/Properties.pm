@@ -5,6 +5,7 @@ use utf8;
 use parent qw(JSON::Schema::Validator::Attributes);
 
 use Carp qw(croak);
+use Clone qw(clone);
 use List::MoreUtils qw(all);
 use JSON::Schema::Validator;
 
@@ -22,7 +23,13 @@ sub is_valid {
 
         my $is_valid = 1;
         for my $prop (keys %$properties) {
-            next unless exists $data->{$prop}; # skip
+            unless (exists $data->{$prop}) {
+                # fill in default
+                if (my $default = $properties->{$prop}->{default}) {
+                    $data->{$prop} = clone($default);
+                }
+                next; # skip
+            }
 
             my $sub_data = $data->{$prop};
             my $sub_schema = $properties->{$prop};
