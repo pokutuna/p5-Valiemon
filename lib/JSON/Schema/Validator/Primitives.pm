@@ -4,7 +4,7 @@ use warnings;
 use utf8;
 
 use Scalar::Util qw(looks_like_number);
-use Types::Serialiser qw(is_bool);
+use Types::Serialiser;
 use Test::Deep qw(eq_deeply);
 
 sub new {
@@ -39,21 +39,21 @@ sub is_integer {
     (defined $obj && $obj =~ qr/^-?\d+$/) ? 1 : 0; # TODO find more better way
 }
 
-sub is_bool {
+sub is_boolean {
     my ($self, $obj) = @_;
     return $self->{options}->{use_json_boolean}
         ? $self->is_boolean_json($obj)
         : $self->is_boolean_perl($obj)
 }
 
-sub is_boolean_perl { # u-n
+sub is_boolean_perl { # 1 or 0
     my ($self, $obj) = @_;
     (defined $obj && looks_like_number($obj) && ($obj == 1 || $obj == 0)) ? 1 : 0; # TODO invalidate 0.0
 }
 
 sub is_boolean_json {
     my ($self, $obj) = @_;
-    (defined $obj && is_bool($obj)) ? 1 : 0;
+    (defined $obj && Types::Serialiser::is_bool($obj)) ? 1 : 0;
 }
 
 sub is_null {
@@ -65,7 +65,7 @@ sub is_null {
 sub is_equal {
     my ($self, $a, $b) = @_;
     return 1 if !defined($a) && !defined($b);
-    return 1 if $self->is_bool($a) && $self->is_bool($b) && $a == $b;
+    return 1 if $self->is_boolean($a) && $self->is_boolean($b) && $a == $b;
     return 1 if $self->is_string($a) && $self->is_string($b) && "$a" eq "$b"; # ah
     return 1 if $self->is_number($a) && $self->is_number($b) && $a == $b;
     return 1 if eq_deeply($a, $b); # array & object

@@ -4,6 +4,9 @@ use warnings;
 use Test::More;
 
 use JSON::Schema::Validator;
+use JSON::XS;
+use JSON::PP;
+use Types::Serialiser;
 
 use_ok 'JSON::Schema::Validator::Primitives';
 
@@ -71,19 +74,59 @@ subtest 'is_integer' => sub {
     ok !$p->is_integer(undef)
 };
 
-subtest 'is_bool' => sub {
+subtest 'is_boolean' => sub {
+    my $p_perl = JSON::Schema::Validator::Primitives->new(+{ use_json_boolean => 0 });
+    ok  $p_perl->is_boolean(Types::Serialiser::true);
+    ok  $p_perl->is_boolean(1);
+    ok !$p_perl->is_boolean({});
+    ok !$p_perl->is_boolean('hoge');
+
+    my $p_json = JSON::Schema::Validator::Primitives->new(+{ use_json_boolean => 1 });
+    ok  $p_json->is_boolean(Types::Serialiser::true);
+    ok !$p_json->is_boolean(1);
+    ok !$p_json->is_boolean({});
+    ok !$p_json->is_boolean('hoge');
+};
+
+subtest 'is_boolean_perl' => sub {
     my $p = JSON::Schema::Validator::Primitives->new;
-    ok !$p->is_bool({});
-    ok !$p->is_bool([]);
-    ok !$p->is_bool('hello');
-    ok !$p->is_bool(12.3);
-    ok !$p->is_bool(4);
-    ok  $p->is_bool(1);
-    ok !$p->is_bool(undef);
+    ok !$p->is_boolean_perl({});
+    ok !$p->is_boolean_perl([]);
+    ok !$p->is_boolean_perl('hello');
+    ok !$p->is_boolean_perl(12.3);
+    ok !$p->is_boolean_perl(4);
+    ok  $p->is_boolean_perl(1);
+    ok !$p->is_boolean_perl(undef);
     TODO : {
         local $TODO = 'invalidate 0.0';
-        ok !$p->is_bool(0.0);
+        ok !$p->is_boolean_perl(0.0);
     }
+
+    ok $p->is_boolean_perl(JSON::XS::true);
+    ok $p->is_boolean_perl(JSON::XS::false);
+    ok $p->is_boolean_perl(JSON::PP::true);
+    ok $p->is_boolean_perl(JSON::PP::false);
+    ok $p->is_boolean_perl(Types::Serialiser::true);
+    ok $p->is_boolean_perl(Types::Serialiser::false);
+};
+
+subtest 'is_boolean_json' => sub {
+    my $p = JSON::Schema::Validator::Primitives->new;
+    ok !$p->is_boolean_json({});
+    ok !$p->is_boolean_json([]);
+    ok !$p->is_boolean_json('hello');
+    ok !$p->is_boolean_json(12.3);
+    ok !$p->is_boolean_json(4);
+    ok !$p->is_boolean_json(1);
+    ok !$p->is_boolean_json(0.0);
+    ok !$p->is_boolean_json(undef);
+
+    ok $p->is_boolean_json(JSON::XS::true);
+    ok $p->is_boolean_json(JSON::XS::false);
+    ok $p->is_boolean_json(JSON::PP::true);
+    ok $p->is_boolean_json(JSON::PP::false);
+    ok $p->is_boolean_json(Types::Serialiser::true);
+    ok $p->is_boolean_json(Types::Serialiser::false);
 };
 
 subtest 'is_null' => sub {
