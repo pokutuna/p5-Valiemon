@@ -73,22 +73,39 @@ __END__
 
 =head1 NAME
 
-JSON::Schema::Validator - It's new $module
+JSON::Schema::Validator - It's a validation module based on JSON Schema
+
+http://json-schema.org/latest/json-schema-core.html
+http://json-schema.org/latest/json-schema-validation.html
+
 
 =head1 SYNOPSIS
 
     use JSON::Schema::Validator;
 
-=head1 DESCRIPTION
+    my $validator = JSON::Schema::Validator->new({
+        # schema
+        type => 'object',
+        properties => {
+            name  => { type => 'string'  },
+            price => { type => 'integer' },
+        },
+        requried => ['name', 'price'],
+    });
 
-JSON::Schema::Validator is ...
+    my ($res, $error);
+    ($res, $error) = $validator->validate({ name => 'unadon', price => 1200 });
+    # $res   => 1
+    # $error => undef
+
+    ($res, $error) = $validator->validate({ name => 'tendon', price => 'hoge' });
+    # $res   => 0
+    # $error => object JSON::Schema::Validation::Error
+    # $error->position => '/properties/price/type'
 
 =head1 LICENSE
 
-Copyright (C) pokutuna.
-
-This library is free software; you can redistribute it and/or modify
-it under the same terms as Perl itself.
+MIT
 
 =head1 AUTHOR
 
