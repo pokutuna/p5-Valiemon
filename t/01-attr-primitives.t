@@ -4,8 +4,8 @@ use warnings;
 use Test::More;
 
 use JSON::Schema::Validator;
-use JSON::XS;
-use JSON::PP;
+use JSON::XS qw();
+use JSON::PP qw();
 use Types::Serialiser;
 
 use_ok 'JSON::Schema::Validator::Primitives';
