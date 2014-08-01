@@ -20,9 +20,11 @@ sub is_valid {
             croak sprintf '`required` must be an array and have at leas one element at %s', $context->position
         }
         all {
-            my $has_default = do {
-                my $prop_def = $schema->{properties};
-                $prop_def && $prop_def->{$_} && $prop_def->{$_}->{default};
+            my $prop_def = $schema->{properties}->{$_};
+            my $has_default = $prop_def && do {
+                # resolve $ref TODO refactor
+                my $definition = $prop_def->{'$ref'} ? $context->rv->resolve_ref($prop_def->{'$ref'}) : $prop_def;
+                $definition->{default};
             };
             $has_default || exists $data->{$_}
         } @$required;

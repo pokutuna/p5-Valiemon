@@ -25,7 +25,13 @@ sub is_valid {
         for my $prop (keys %$properties) {
             unless (exists $data->{$prop}) {
                 # fill in default
-                if (my $default = $properties->{$prop}->{default}) {
+                my $default = do {
+                    my $definition = $properties->{$prop}->{'$ref'} # resolve ref TODO refactor
+                        ? $context->rv->resolve_ref($properties->{$prop}->{'$ref'})
+                        : $properties->{$prop};
+                    $definition->{default};
+                };
+                if ($default) {
                     $data->{$prop} = clone($default);
                 }
                 next; # skip

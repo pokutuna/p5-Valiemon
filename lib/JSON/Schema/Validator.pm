@@ -65,6 +65,31 @@ sub ref_schema_cache {
         : $self->{schema_cache}->{ref};
 }
 
+sub resolve_ref {
+    my ($self, $ref) = @_;
+
+    # TODO follow the standard dereferencing
+    unless ($ref =~ qr|^#/|) {
+        croak 'This package support only single scope and `#/` referencing';
+    }
+
+    return $self->ref_schema_cache($ref) || do {
+        my $paths = do {
+            my @p = split '/', $ref;
+            [ splice @p, 1 ];           # remove '#'
+        };
+        my $sub_schema = $self->schema;
+        {
+            eval { $sub_schema = $sub_schema->{$_} for @$paths };
+            croak sprintf 'referencing `%s` cause error', $ref if $@;
+            croak sprintf 'schema `%s` not found', $ref unless $sub_schema;
+        }
+        $self->ref_schema_cache($ref, $sub_schema); # caching
+        $sub_schema;
+    };
+}
+
+
 1;
 
 __END__

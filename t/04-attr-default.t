@@ -20,7 +20,7 @@ subtest 'fillin default' => sub {
     ($res, $error) = $v->validate($d1);
     ok $res;
     is $error, undef;
-    is_deeply $d1, { id => 10, name => 'anonymous' };
+    is_deeply $d1, { id => 10, name => 'anonymous' }, 'fillin name property';
 
 
     my $d2 = { id => 927, name => 'pokupoku' };
@@ -30,7 +30,35 @@ subtest 'fillin default' => sub {
     is_deeply $d2, { id => 927, name => 'pokupoku' }, 'keep name property';
 };
 
-subtest 'fillin default' => sub {
+subtest 'fillin default with $ref' => sub {
+    my ($res, $error);
+    my $v = JSON::Schema::Validator->new({
+        type => 'object',
+        definitions => {
+            name => { type => 'string', default => 'anonymous' },
+        },
+        properties => {
+            id => { type => 'integer' },
+            name => { '$ref' => '#/definitions/name' },
+        },
+        required => [qw(id name)],
+    });
+
+    my $d1 = { id => 10 };
+    ($res, $error) = $v->validate($d1);
+    ok $res;
+    is $error, undef;
+    is_deeply $d1, { id => 10, name => 'anonymous' }, 'fillin name property';
+
+
+    my $d2 = { id => 927, name => 'pokupoku' };
+    ($res, $error) = $v->validate($d2);
+    ok $res;
+    is $error, undef;
+    is_deeply $d2, { id => 927, name => 'pokupoku' }, 'keep name property';
+};
+
+subtest 'fillin default at toplevel' => sub {
     TODO : {
         # > This keyword MAY be used in root schemas, and in any subschemas.
         # http://json-schema.org/latest/json-schema-validation.html#anchor103
