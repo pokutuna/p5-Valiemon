@@ -28,3 +28,7 @@ cover_db/
 MYMETA.*
 
 /JSON-Schema-*
+/JSON-Schema-Validator-*
+/.build
+!Build/
+!META.json
