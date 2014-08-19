@@ -61,5 +61,10 @@
       }
    },
    "release_status" : "unstable",
-   "version" : "0.01"
+   "resources" : {
+      "repository" : {
+         "url" : "git://github.com/pokutuna/JSON-Schema-Validator.git"
+      }
+   },
+   "version" : "0.02"
 }
