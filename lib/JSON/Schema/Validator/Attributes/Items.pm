@@ -18,8 +18,11 @@ sub is_valid {
     if (ref $items eq 'HASH') {
         # schema
         return $context->in_attr($class, sub {
+            my $idx = 0;
+            my $sub_v = $context->sub_validator($items);
             all {
-                $context->sub_validator($items)->validate($_, $context);
+                $context->in($idx, sub { $sub_v->validate($_, $context) });
+                $idx += 1;
             } @$data;
         });
     } elsif (ref $items eq 'ARRAY') {
