@@ -4,7 +4,7 @@
       "pokutuna <popopopopokutuna@gmail.com>"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Minilla/v2.1.1, CPAN::Meta::Converter version 2.142060",
+   "generated_by" : "Minilla/v2.3.0, CPAN::Meta::Converter version 2.142690",
    "license" : [
       "mit"
    ],
@@ -33,6 +33,7 @@
       },
       "develop" : {
          "requires" : {
+            "Software::License" : "0",
             "Test::CPAN::Meta" : "0",
             "Test::MinimumVersion::Fast" : "0.04",
             "Test::PAUSE::Permissions" : "0.04",
@@ -63,6 +64,7 @@
    "release_status" : "unstable",
    "resources" : {
       "repository" : {
+         "type" : "git",
          "url" : "git://github.com/pokutuna/JSON-Schema-Validator.git"
       }
    },
