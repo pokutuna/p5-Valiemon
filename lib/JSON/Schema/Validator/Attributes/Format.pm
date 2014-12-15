@@ -18,11 +18,11 @@ sub is_valid {
         my $format = $schema->{format};
 
         if ($format eq 'date-time') {
-            return _format_date_time($data);
+            return _validate_date_time($data);
         }
 
         if ($format eq 'uri') {
-            return _format_uri($data);
+            return _validate_uri($data);
         }
 
         # TODO: email, hostname, ipv4, ipv6
@@ -31,12 +31,12 @@ sub is_valid {
     });
 }
 
-sub _format_date_time {
+sub _validate_date_time {
     my ($data) = @_;
     $data =~ /\A\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d+)?(Z|[+-]\d{2}:\d{2})/ ? 1 :  0;
 }
 
-sub _format_uri {
+sub _validate_uri {
     my ($data) = @_;
     Data::Validate::URI::is_uri($data);
 }
