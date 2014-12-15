@@ -9,6 +9,7 @@ requires 'List::MoreUtils';
 requires 'Scalar::Util';
 requires 'Types::Serialiser';
 requires 'Test::Deep';
+requires 'Data::Validate::URI';
 
 on 'test' => sub {
     requires 'Test::More', '0.98';
