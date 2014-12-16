@@ -68,5 +68,8 @@
          "url" : "git://github.com/pokutuna/JSON-Schema-Validator.git"
       }
    },
-   "version" : "0.02"
+   "version" : "0.02",
+   "x_contributors" : [
+      "hitode909 <hitode909@gmail.com>"
+   ]
 }
