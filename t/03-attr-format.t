@@ -34,6 +34,17 @@ subtest 'date-time' => sub {
         ok !$res;
         is $error->position, '/format';
     };
+
+    subtest 'invalid(range)' => sub {
+        TODO : {
+            local $TODO = 'RFC3339 range of value';
+            ($res, $error) = $v->validate('2014-13-61T00:00:00Z');
+            ok !$res;
+
+            todo_skip 'it dies', 1;
+            is $error->position, '/format';
+        };
+    }
 };
 
 subtest 'uri' => sub {
