@@ -53,7 +53,9 @@ sub is_boolean_perl { # 1 or 0
 
 sub is_boolean_json {
     my ($self, $obj) = @_;
-    (defined $obj && Types::Serialiser::is_bool($obj)) ? 1 : 0;
+    return 1 if defined $obj && Types::Serialiser::is_bool($obj);
+    return 1 if ref $obj eq 'SCALAR' && looks_like_number($$obj) && ($$obj == 1 || $$obj == 0);
+    return 0;
 }
 
 sub is_null {

@@ -80,9 +80,13 @@ subtest 'is_boolean' => sub {
     ok  $p_perl->is_boolean(1);
     ok !$p_perl->is_boolean({});
     ok !$p_perl->is_boolean('hoge');
+    ok !$p_perl->is_boolean(\1);
+    ok !$p_perl->is_boolean(\0);
 
     my $p_json = JSON::Schema::Validator::Primitives->new(+{ use_json_boolean => 1 });
     ok  $p_json->is_boolean(Types::Serialiser::true);
+    ok  $p_json->is_boolean(\1);
+    ok  $p_json->is_boolean(\0);
     ok !$p_json->is_boolean(1);
     ok !$p_json->is_boolean({});
     ok !$p_json->is_boolean('hoge');
@@ -97,6 +101,8 @@ subtest 'is_boolean_perl' => sub {
     ok !$p->is_boolean_perl(4);
     ok  $p->is_boolean_perl(1);
     ok !$p->is_boolean_perl(undef);
+    ok !$p->is_boolean_perl(\1);
+    ok !$p->is_boolean_perl(\0);
     TODO : {
         local $TODO = 'invalidate 0.0';
         ok !$p->is_boolean_perl(0.0);
@@ -120,6 +126,8 @@ subtest 'is_boolean_json' => sub {
     ok !$p->is_boolean_json(1);
     ok !$p->is_boolean_json(0.0);
     ok !$p->is_boolean_json(undef);
+    ok  $p->is_boolean_json(\1);
+    ok  $p->is_boolean_json(\0);
 
     ok $p->is_boolean_json(JSON::XS::true);
     ok $p->is_boolean_json(JSON::XS::false);
