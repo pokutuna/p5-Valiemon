@@ -11,6 +11,7 @@ sub is_valid {
     my $min = $schema->{minimum};
     my $exclusive = $schema->{exclusiveMinimum} || 0;
     $context->in_attr($class, sub {
+        no warnings 'numeric';
         $exclusive ? $min < $data : $min <= $data;
     });
 }
