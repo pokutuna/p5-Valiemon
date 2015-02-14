@@ -16,19 +16,22 @@ sub is_valid {
     $context->in_attr($class, sub {
         return 1 unless ref $data eq 'HASH'; # ignore
 
-        my $properties = $schema->{properties};
-        unless (ref $properties eq 'HASH') {
+        my $properties = $schema->sub_schema('properties');
+        unless ($properties->is_hash) {
             croak sprintf '`properties` must be an object at %s', $context->position
         }
 
         my $is_valid = 1;
-        for my $prop (keys %$properties) {
+        for my $prop (keys %{$properties->raw}) {
+            my $sub_schema = $properties->sub_schema($prop);
+
+            # fill in default
             unless (exists $data->{$prop}) {
-                # fill in default
                 my $default = do {
-                    my $definition = $properties->{$prop}->{'$ref'} # resolve ref TODO refactor
-                        ? $context->rv->resolve_ref($properties->{$prop}->{'$ref'})
-                        : $properties->{$prop};
+                    # resolve ref TODO refactor
+                    my $definition = $sub_schema->raw->{'$ref'}
+                        ? $sub_schema->resolve_ref($sub_schema->raw->{'$ref'})->raw
+                        : $sub_schema->raw;
                     $definition->{default};
                 };
                 if ($default) {
@@ -38,7 +41,6 @@ sub is_valid {
             }
 
             my $sub_data = $data->{$prop};
-            my $sub_schema = $properties->{$prop};
             my $res = $context->in($prop, sub {
                 $context->sub_validator($sub_schema)->validate($sub_data, $context);
             });

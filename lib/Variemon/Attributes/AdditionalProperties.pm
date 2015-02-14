@@ -14,11 +14,11 @@ sub is_valid {
 
     return 1 unless ref $data eq 'HASH'; # ignore
 
-    my $additionalProperties = $schema->{additionalProperties};
+    my $additionalProperties = $schema->prop('additionalProperties');
     return 1 unless defined $additionalProperties;
     return 1 if $additionalProperties;
 
-    my $properties = $schema->{properties};
+    my $properties = $schema->prop('properties');
     $context->in_attr($class, sub {
         all {
             exists $properties->{$_};

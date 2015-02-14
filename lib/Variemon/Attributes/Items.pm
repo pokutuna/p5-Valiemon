@@ -14,8 +14,8 @@ sub is_valid {
     my ($class, $context, $schema, $data) = @_;
     return 1 unless ref $data eq 'ARRAY'; # ignore
 
-    my $items = $schema->{items};
-    if (ref $items eq 'HASH') {
+    my $items = $schema->sub_schema('items');
+    if ($items->is_hash) {
         # schema
         return $context->in_attr($class, sub {
             my $idx = 0;
@@ -25,13 +25,14 @@ sub is_valid {
                 $idx += 1;
             } @$data;
         });
-    } elsif (ref $items eq 'ARRAY') {
+    } elsif ($items->is_array) {
         # index base
         return $context->in_attr($class, sub {
             my $is_valid = 1;
-            for (my $i = 0; $i < @$items; $i++) {
+            for (my $i = 0; $i < @{$items->raw}; $i++) {
                 my $v = $context->in($i, sub {
-                    $context->sub_validator($items->[$i])->validate($data->[$i], $context);
+                    $context->sub_validator($items->raw->[$i])
+                        ->validate($data->[$i], $context);
                 });
                 unless ($v) {
                     $is_valid = 0;

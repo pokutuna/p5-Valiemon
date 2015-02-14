@@ -11,7 +11,7 @@ sub attr_name { 'type' }
 sub is_valid {
     my ($class, $context, $schema, $data) = @_;
     $context->in_attr($class, sub {
-        my $types = $schema->{type};
+        my $types = $schema->prop('type');
 
         my $is_valid = do {
             if (ref $types eq 'ARRAY') {

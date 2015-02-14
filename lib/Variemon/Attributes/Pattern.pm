@@ -14,7 +14,7 @@ sub is_valid {
     return 1 unless $context->prims->is_string($data);
 
     $context->in_attr($class, sub {
-        my $pattern = $schema->{pattern};
+        my $pattern = $schema->prop('pattern');
 
         unless ($context->prims->is_string($pattern)) {
             croak sprintf '`pattern` must be a string at %s', $context->position

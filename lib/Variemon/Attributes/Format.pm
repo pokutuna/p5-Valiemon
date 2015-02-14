@@ -15,7 +15,7 @@ sub is_valid {
     return 1 unless $context->prims->is_string($data);
 
     $context->in_attr($class, sub {
-        my $format = $schema->{format};
+        my $format = $schema->prop('format');
 
         if ($format eq 'date-time') {
             return _validate_date_time($data);

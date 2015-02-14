@@ -12,7 +12,7 @@ sub attr_name { 'enum' }
 sub is_valid {
     my ($class, $context, $schema, $data) = @_;
 
-    my $enum = $schema->{enum};
+    my $enum = $schema->prop('enum');
     $context->in_attr($class, sub {
         if (ref $enum ne 'ARRAY' || scalar @$enum < 1) {
             croak sprintf '`enum` must be an array and have at leas one element at %s', $context->position

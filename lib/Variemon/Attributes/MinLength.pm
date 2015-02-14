@@ -13,7 +13,7 @@ sub is_valid {
 
     return 1 unless $context->prims->is_string($data); # ignore
 
-    my $min_length = $schema->{minLength};
+    my $min_length = $schema->prop('minLength');
     $context->in_attr($class, sub {
         if (!$context->prims->is_integer($min_length) || !(0 <= $min_length)) {
             croak sprintf '`minLength` must be an integer. This integer must be greater than, or equal to, 0 at %s',

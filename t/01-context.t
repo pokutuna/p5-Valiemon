@@ -36,7 +36,7 @@ subtest 'sub_validator' => sub {
     is_deeply $v->options, $opts;
 
     my $c = Variemon::Context->new($v, $v->schema);
-    my $sub_schema = $v->resolve_ref('#/definitions/person');
+    my $sub_schema = $v->schema->resolve_ref('#/definitions/person');
     my $sv = $c->sub_validator($sub_schema);
     is_deeply $sv->options, $opts, 'inherit options from root validator in context';
 };

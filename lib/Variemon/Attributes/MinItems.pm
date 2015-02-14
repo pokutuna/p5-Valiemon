@@ -13,7 +13,7 @@ sub is_valid {
 
     return 1 unless ref $data eq 'ARRAY'; # ignore
 
-    my $min_items = $schema->{minItems};
+    my $min_items = $schema->prop('minItems');
     $context->in_attr($class, sub {
         if (!$context->prims->is_integer($min_items) || !(0 <= $min_items)) {
             croak sprintf '`minItems` must be an integer. This integer must be greater than, or equal to 0 at %s',

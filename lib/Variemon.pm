@@ -5,8 +5,11 @@ use warnings;
 use utf8;
 
 use Carp qw(croak);
+use Scalar::Util qw(blessed);
+
 use Variemon::Primitives;
 use Variemon::Context;
+use Variemon::SchemaObject;
 use Variemon::Attributes qw(attr);
 
 use Class::Accessor::Lite (
@@ -16,12 +19,14 @@ use Class::Accessor::Lite (
 our $VERSION = "0.02";
 
 sub new {
-    my ($class, $schema, $options) = @_;
+    my ($class, $in_schema, $options) = @_;
 
     # TODO should validate own schema
-    if ($options->{validate_schema}) {}
-    croak 'schema must be a hashref' unless ref $schema eq 'HASH';
+    # if ($options->{validate_schema}) {}
+    # croak 'schema must be a hashref' unless ref $raw_schema eq 'HASH';
 
+    my $schema = blessed $in_schema
+        ? $in_schema : Valiemon::SchemaObject->new($in_schema);
     return bless {
         schema       => $schema,
         options      => $options,
@@ -31,14 +36,13 @@ sub new {
 
 sub validate {
     my ($self, $data, $context) = @_;
-    my $schema = $self->schema;
 
-    $context //= Variemon::Context->new($self, $schema);
+    $context //= Variemon::Context->new($self, $self->schema);
 
-    for my $key (keys %{$schema}) {
+    for my $key (keys %{$self->schema->raw}) {
         my $attr = attr($key);
         if ($attr) {
-            my ($is_valid, $error) = $attr->is_valid($context, $schema, $data);
+            my ($is_valid, $error) = $attr->is_valid($context, $self->schema, $data);
             unless ($is_valid) {
                 $context->push_error($error);
                 next;
@@ -57,38 +61,6 @@ sub prims {
         $self->options
     );
 }
-
-sub ref_schema_cache {
-    my ($self, $ref, $schema) = @_;
-    return defined $schema
-        ? $self->schema_cache->{$ref} = $schema
-        : $self->{schema_cache}->{ref};
-}
-
-sub resolve_ref {
-    my ($self, $ref) = @_;
-
-    # TODO follow the standard referencing
-    unless ($ref =~ qr|^#/|) {
-        croak 'This package support only single scope and `#/` referencing';
-    }
-
-    return $self->ref_schema_cache($ref) || do {
-        my $paths = do {
-            my @p = split '/', $ref;
-            [ splice @p, 1 ]; # remove '#'
-        };
-        my $sub_schema = $self->schema;
-        {
-            eval { $sub_schema = $sub_schema->{$_} for @$paths };
-            croak sprintf 'referencing `%s` cause error', $ref if $@;
-            croak sprintf 'schema `%s` not found', $ref unless $sub_schema;
-        }
-        $self->ref_schema_cache($ref, $sub_schema); # caching
-        $sub_schema;
-    };
-}
-
 
 1;
 

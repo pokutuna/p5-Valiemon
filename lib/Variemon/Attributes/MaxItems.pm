@@ -13,7 +13,7 @@ sub is_valid {
 
     return 1 unless ref $data eq 'ARRAY'; # ignore
 
-    my $max_items = $schema->{maxItems};
+    my $max_items = $schema->prop('maxItems');
     $context->in_attr($class, sub {
         if (!$context->prims->is_integer($max_items) || !(0 <= $max_items)) {
             croak sprintf '`maxItems` must be an integer. This integer must be greater than, or equal to 0 at %s',

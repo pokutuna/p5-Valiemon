@@ -10,8 +10,8 @@ sub attr_name { '$ref' }
 
 sub is_valid {
     my ($class, $context, $schema, $data) = @_;
-    my $ref = $schema->{'$ref'};
-    my $sub_schema = $context->rv->resolve_ref($ref);
+    my $ref = $schema->raw->{'$ref'};
+    my $sub_schema = $schema->resolve_ref($ref);
 
     $context->in_attr($class, sub {
         $context->sub_validator($sub_schema)->validate($data, $context);

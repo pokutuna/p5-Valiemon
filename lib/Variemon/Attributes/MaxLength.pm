@@ -13,7 +13,7 @@ sub is_valid {
 
     return 1 unless $context->prims->is_string($data); # ignore
 
-    my $max_length = $schema->{maxLength};
+    my $max_length = $schema->prop('maxLength');
     $context->in_attr($class, sub {
         if (!$context->prims->is_integer($max_length) || !(0 <= $max_length)) {
             croak sprintf '`maxLength` must be an integer. This integer must be greater than, or equal to, 0 at %s',

@@ -8,8 +8,8 @@ sub attr_name { 'maximum' }
 
 sub is_valid {
     my ($class, $context, $schema, $data) = @_;
-    my $max = $schema->{maximum};
-    my $exclusive = $schema->{exclusiveMaximum} || 0;
+    my $max = $schema->prop('maximum');
+    my $exclusive = $schema->prop('exclusiveMaximum') || 0;
     $context->in_attr($class, sub {
         no warnings 'numeric';
         $exclusive ? $data < $max : $data <= $max;
