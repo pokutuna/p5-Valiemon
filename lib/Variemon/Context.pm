@@ -39,11 +39,6 @@ sub pop_pos {
     pop @{$self->positions};
 }
 
-sub is_root {
-    my ($self) = @_;
-    return scalar @{$self->positions} == 0 ? 1 : 0;
-}
-
 sub position {
     my ($self) = @_;
     return '/' . join '/', @{$self->positions};
