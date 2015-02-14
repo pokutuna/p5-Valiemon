@@ -68,7 +68,7 @@ sub ref_schema_cache {
 sub resolve_ref {
     my ($self, $ref) = @_;
 
-    # TODO follow the standard dereferencing
+    # TODO follow the standard referencing
     unless ($ref =~ qr|^#/|) {
         croak 'This package support only single scope and `#/` referencing';
     }
@@ -76,7 +76,7 @@ sub resolve_ref {
     return $self->ref_schema_cache($ref) || do {
         my $paths = do {
             my @p = split '/', $ref;
-            [ splice @p, 1 ];           # remove '#'
+            [ splice @p, 1 ]; # remove '#'
         };
         my $sub_schema = $self->schema;
         {

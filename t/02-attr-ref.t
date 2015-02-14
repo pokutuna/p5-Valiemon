@@ -111,4 +111,23 @@ subtest 'validate with nested $ref referencing' => sub {
 
 };
 
+subtest 'reference recursively' => sub {
+    my ($res, $err);
+    my $v = JSON::Schema::Validator->new({
+        definitions => {
+            foo => { '$ref' => '#/definitions/bar' },
+            bar => { 'type' => 'integer' },
+        },
+        '$ref' => '#/definitions/foo',
+    });
+
+    ($res, $err) = $v->validate(1);
+    ok $res;
+    is $err, undef;
+
+    ($res, $err) = $v->validate(2.1);
+    ok !$res;
+    is $err->position, '/$ref/$ref/type';
+};
+
 done_testing;
