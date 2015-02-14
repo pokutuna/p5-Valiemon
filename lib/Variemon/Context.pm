@@ -13,16 +13,13 @@ sub new {
     my ($class, $validator, $schema) = @_;
     return bless {
         root_validator => $validator,
-        root_schema    => $schema,
         errors         => [],
         positions      => [],
     }, $class;
 }
 
 sub rv { $_[0]->root_validator }
-sub rs { $_[0]->root_schema }
-
-sub prims { $_[0]->root_validator->prims } # TODO refactor
+sub prims { $_[0]->root_validator->prims }
 
 sub push_error {
     my ($self, $error) = @_;

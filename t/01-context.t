@@ -28,7 +28,6 @@ subtest 'new' => sub {
     my $v = Variemon->new($schema);
     my $c = Variemon::Context->new($v, $v->schema);
     is $c->root_validator, $v;
-    is_deeply $c->root_schema, $v->schema;
 };
 
 subtest 'sub_validator' => sub {
