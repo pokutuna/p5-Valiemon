@@ -21,13 +21,8 @@ sub is_valid {
         }
         all {
             my $prop_def = ($schema->prop('properties') || {})->{$_};
-            my $has_default = $prop_def && do {
-                # resolve $ref TODO refactor
-                my $definition = $prop_def->{'$ref'} ?
-                    $schema->resolve_ref($prop_def->{'$ref'})->raw : $prop_def;
-                $definition->{'default'};
-            };
-            $has_default || exists $data->{$_}
+            my $has_default = $prop_def && $schema->_create_sub_schema($prop_def)->get_default;
+            $has_default || exists $data->{$_};
         } @$required;
     });
 }

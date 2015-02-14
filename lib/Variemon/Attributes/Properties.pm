@@ -27,13 +27,7 @@ sub is_valid {
 
             # fill in default
             unless (exists $data->{$prop}) {
-                my $default = do {
-                    # resolve ref TODO refactor
-                    my $definition = $sub_schema->raw->{'$ref'}
-                        ? $sub_schema->resolve_ref($sub_schema->raw->{'$ref'})->raw
-                        : $sub_schema->raw;
-                    $definition->{default};
-                };
+                my $default = $sub_schema->get_default;
                 if ($default) {
                     $data->{$prop} = clone($default);
                 }

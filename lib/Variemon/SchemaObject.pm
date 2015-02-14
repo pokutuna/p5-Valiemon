@@ -44,6 +44,20 @@ sub _create_sub_schema {
     return __PACKAGE__->new($raw_schema, $self->root_schema);
 }
 
+
+## attribute utils
+
+sub child_ref { return $_[0]->prop('$ref') }
+
+sub get_default {
+    my ($self) = @_;
+    my $schema = $self->child_ref ? $self->resolve_ref($self->child_ref) : $self;
+    return $schema->prop('default');
+}
+
+
+## cache
+
 # cache hashref instead of SchemaObject for avoiding circular reference
 sub ref_schema_cache {
     my ($self, $ref_pointer, $sub_schema_raw) = @_;
