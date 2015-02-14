@@ -71,7 +71,7 @@ sub sub_validator {
     require Variemon;
     return Variemon->new(
         $sub_schema,
-        $self->rv->options, # inherit options
+        $self->root_validator->options, # inherit options
     );
 }
 
