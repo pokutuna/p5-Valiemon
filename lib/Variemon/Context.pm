@@ -6,7 +6,7 @@ use utf8;
 use Variemon::ValidationError;
 
 use Class::Accessor::Lite (
-    ro => [qw(root_validator root_schema errors positions)],
+    ro => [qw(errors positions)],
 );
 
 sub new {
@@ -18,8 +18,11 @@ sub new {
     }, $class;
 }
 
-sub rv { $_[0]->root_validator }
-sub prims { $_[0]->root_validator->prims }
+sub con_validate { # TODO rename
+    my ($self) = @_;
+}
+
+sub prims { $_[0]->{root_validator}->prims }
 
 sub push_error {
     my ($self, $error) = @_;
@@ -68,7 +71,7 @@ sub sub_validator {
     require Variemon;
     return Variemon->new(
         $sub_schema,
-        $self->root_validator->options, # inherit options
+        $self->{root_validator}->options, # inherit options
     );
 }
 
