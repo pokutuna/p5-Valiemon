@@ -20,8 +20,8 @@ sub is_valid {
             croak sprintf '`required` must be an array and have at leas one element at %s', $context->position
         }
         all {
-            my $prop_def = ($schema->prop('properties') || {})->{$_};
-            my $has_default = $prop_def && $schema->_create_sub_schema($prop_def)->get_default;
+            my $prop_def = $schema->get('properties')->get($_);
+            my $has_default = !$prop_def->is_undef && $schema->new_sub_schema($prop_def)->get_default;
             $has_default || exists $data->{$_};
         } @$required;
     });

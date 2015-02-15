@@ -3,28 +3,37 @@ use strict;
 use warnings;
 use utf8;
 
+use parent 'Variemon::LocatableData';
+
 use Carp qw(croak);
-use Class::Accessor::Lite (
-    ro => [qw(raw)],
-);
 
 sub new {
-    my ($class, $raw_schema, $root_schema) = @_;
+    my ($class, $raw_schema, %opts) = @_;
 
     unless (ref $raw_schema eq 'HASH' || ref $raw_schema eq 'ARRAY') {
         croak 'schema must be a hashref or arrayref';
     }
 
-    return bless {
-        raw          => $raw_schema, # hashref, array
-        schema_cache => +{},
-        root_schema  => $root_schema,
-    }, $class
+    my $self = $class->SUPER::new(
+        $raw_schema,
+        $opts{schema_position},
+    );
+    $self->{schema_cache} = +{};
+    $self->{root_schema}  = $opts{root_schema};
+
+    return $self;
 }
 
-sub is_root  { return !defined $_[0]->{root_schema} }
-sub is_hash  { return ref $_[0]->raw eq 'HASH'  }
-sub is_array { return ref $_[0]->raw eq 'ARRAY' }
+sub new_sub_schema {
+    my ($self, $schema_data) = @_;
+    return __PACKAGE__->new(
+        $schema_data->raw,
+        schema_position => $schema_data->{positions},
+        root_schema     => $self->root_schema,
+    );
+}
+
+sub is_root { return !defined $_[0]->{root_schema} }
 
 sub root_schema {
     my ($self) = @_;
@@ -33,22 +42,15 @@ sub root_schema {
 
 sub prop {
     my ($self, $prop_name) = @_;
-    return $self->raw->{$prop_name};
+    return $self->get($prop_name)->raw;
 }
 
 sub sub_schema {
     my ($self, $key_or_index) = @_;
-    my $sub_schema_raw = $self->is_hash
-        ? $self->raw->{$key_or_index} : $self->raw->[$key_or_index];
-    croak "sub schema `$key_or_index` doesn't exist" unless defined $sub_schema_raw;
-    return $self->_create_sub_schema($sub_schema_raw);
+    my $schema_data = $self->get($key_or_index);
+    croak "sub schema `$key_or_index` doesn't exist" if $schema_data->is_undef;
+    return $self->new_sub_schema($schema_data);
 }
-
-sub _create_sub_schema {
-    my ($self, $raw_schema) = @_;
-    return __PACKAGE__->new($raw_schema, $self->root_schema);
-}
-
 
 ## attribute utils
 
@@ -63,13 +65,12 @@ sub get_default {
 
 ## cache
 
-# cache hashref instead of SchemaObject for avoiding circular reference
 sub ref_schema_cache {
-    my ($self, $ref_pointer, $sub_schema_raw) = @_;
+    my ($self, $ref_pointer, $sub_schema_data) = @_;
     croak 'only the root schema has cache' unless $self->is_root;
-    return defined $sub_schema_raw
-        ? $self->{schema_cache}->{$ref_pointer} = $sub_schema_raw
-        : $self->{schema_cache}->{$ref_pointer};
+    return defined $sub_schema_data
+        ? $self->{schema_cache}->{$ref_pointer} = $sub_schema_data # set
+        : $self->{schema_cache}->{$ref_pointer};                   # get
 }
 
 sub resolve_ref {
@@ -80,22 +81,21 @@ sub resolve_ref {
         croak 'This package support only single scope and `#/` referencing';
     }
 
-    my $root = $self->root_schema;
-    my $sub_schema_raw = $root->ref_schema_cache($ref_pointer) || do {
+    my $sub_schema_data = $self->root_schema->ref_schema_cache($ref_pointer) || do {
         my $paths = do {
             my @p = split '/', $ref_pointer;
             [ splice @p, 1 ]; # remove '#'
         };
-        my $schema = $root->raw;
+        my $schema = $self->root_schema;
         {
-            eval { $schema = $schema->{$_} for @$paths };
+            eval { $schema = $schema->get($_) for @$paths };
             croak sprintf 'referencing `%s` cause error', $ref_pointer if $@;
-            croak sprintf 'schema `%s` not found', $ref_pointer unless $schema;
+            croak sprintf 'schema `%s` not found', $ref_pointer if $schema->is_undef;
         }
-        $root->ref_schema_cache($ref_pointer, $schema);
+        $self->root_schema->ref_schema_cache($ref_pointer, $schema); # set cache
         $schema;
     };
-    return $self->_create_sub_schema($sub_schema_raw);
+    return $self->new_sub_schema($sub_schema_data);
 }
 
 1;
