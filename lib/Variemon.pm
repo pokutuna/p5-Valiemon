@@ -21,10 +21,6 @@ our $VERSION = "0.02";
 sub new {
     my ($class, $in_schema, $options) = @_;
 
-    # TODO should validate own schema
-    # if ($options->{validate_schema}) {}
-    # croak 'schema must be a hashref' unless ref $raw_schema eq 'HASH';
-
     my $schema = blessed $in_schema
         ? $in_schema : Valiemon::SchemaObject->new($in_schema);
     return bless {

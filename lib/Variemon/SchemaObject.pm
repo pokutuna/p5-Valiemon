@@ -10,6 +10,11 @@ use Class::Accessor::Lite (
 
 sub new {
     my ($class, $raw_schema, $root_schema) = @_;
+
+    unless (ref $raw_schema eq 'HASH' || ref $raw_schema eq 'ARRAY') {
+        croak 'schema must be a hashref or arrayref';
+    }
+
     return bless {
         raw          => $raw_schema, # hashref, array
         schema_cache => +{},
