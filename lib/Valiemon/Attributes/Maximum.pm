@@ -1,8 +1,8 @@
-package Variemon::Attributes::Maximum;
+package Valiemon::Attributes::Maximum;
 use strict;
 use warnings;
 use utf8;
-use parent qw(Variemon::Attributes);
+use parent qw(Valiemon::Attributes);
 
 sub attr_name { 'maximum' }
 

@@ -1,8 +1,8 @@
-package Variemon::Attributes::Type;
+package Valiemon::Attributes::Type;
 use strict;
 use warnings;
 use utf8;
-use parent qw(Variemon::Attributes);
+use parent qw(Valiemon::Attributes);
 
 use List::MoreUtils qw(any);
 

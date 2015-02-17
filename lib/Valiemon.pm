@@ -1,13 +1,13 @@
-package Variemon;
+package Valiemon;
 use 5.012;
 use strict;
 use warnings;
 use utf8;
 
 use Carp qw(croak);
-use Variemon::Primitives;
-use Variemon::Context;
-use Variemon::Attributes qw(attr);
+use Valiemon::Primitives;
+use Valiemon::Context;
+use Valiemon::Attributes qw(attr);
 
 use Class::Accessor::Lite (
     ro => [qw(schema options pos schema_cache)],
@@ -33,7 +33,7 @@ sub validate {
     my ($self, $data, $context) = @_;
     my $schema = $self->schema;
 
-    $context //= Variemon::Context->new($self, $schema);
+    $context //= Valiemon::Context->new($self, $schema);
 
     for my $key (keys %{$schema}) {
         my $attr = attr($key);
@@ -53,7 +53,7 @@ sub validate {
 
 sub prims {
     my ($self) = @_;
-    return $self->{prims} //= Variemon::Primitives->new(
+    return $self->{prims} //= Valiemon::Primitives->new(
         $self->options
     );
 }

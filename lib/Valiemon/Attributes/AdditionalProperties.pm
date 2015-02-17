@@ -1,8 +1,8 @@
-package Variemon::Attributes::AdditionalProperties;
+package Valiemon::Attributes::AdditionalProperties;
 use strict;
 use warnings;
 use utf8;
-use parent qw(Variemon::Attributes);
+use parent qw(Valiemon::Attributes);
 
 use Carp qw(croak);
 use List::MoreUtils qw(all);

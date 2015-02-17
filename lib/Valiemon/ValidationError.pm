@@ -1,4 +1,4 @@
-package Variemon::ValidationError;
+package Valiemon::ValidationError;
 use strict;
 use warnings;
 use utf8;

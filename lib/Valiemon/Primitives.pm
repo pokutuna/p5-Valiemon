@@ -1,4 +1,4 @@
-package Variemon::Primitives;
+package Valiemon::Primitives;
 use strict;
 use warnings;
 use utf8;

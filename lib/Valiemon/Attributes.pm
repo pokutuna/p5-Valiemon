@@ -1,4 +1,4 @@
-package Variemon::Attributes;
+package Valiemon::Attributes;
 use strict;
 use warnings;
 use utf8;
@@ -6,7 +6,7 @@ use utf8;
 use Carp qw(croak);
 use Exporter qw(import);
 use Class::Load qw(is_class_loaded try_load_class);
-use Variemon::ValidationError;
+use Valiemon::ValidationError;
 
 our @EXPORT_OK = qw(attr);
 

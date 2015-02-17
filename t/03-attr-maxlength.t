@@ -3,13 +3,13 @@ use warnings;
 
 use Test::More;
 
-use Variemon;
+use Valiemon;
 
-use_ok 'Variemon::Attributes::MaxLength';
+use_ok 'Valiemon::Attributes::MaxLength';
 
 subtest 'validate maxLength' => sub {
     my ($res, $err);
-    my $v = Variemon->new({ maxLength => 6 });
+    my $v = Valiemon->new({ maxLength => 6 });
 
     ($res, $err) = $v->validate('unagi');
     ok $res;
@@ -27,13 +27,13 @@ subtest 'validate maxLength' => sub {
 subtest 'detect schema error' => sub {
     {
         eval {
-            Variemon->new({ maxLength => -1 })->validate('a');
+            Valiemon->new({ maxLength => -1 })->validate('a');
         };
         like $@, qr/`maxLength` must be/;
     }
     {
         eval {
-            Variemon->new({ maxLength => {} })->validate('b');
+            Valiemon->new({ maxLength => {} })->validate('b');
         };
         like $@, qr/`maxLength` must be/;
     }

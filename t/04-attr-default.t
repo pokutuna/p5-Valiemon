@@ -3,11 +3,11 @@ use warnings;
 
 use Test::More;
 
-use Variemon;
+use Valiemon;
 
 subtest 'fillin default' => sub {
     my ($res, $error);
-    my $v = Variemon->new({
+    my $v = Valiemon->new({
         type => 'object',
         properties => {
             id => { type => 'integer' },
@@ -32,7 +32,7 @@ subtest 'fillin default' => sub {
 
 subtest 'fillin default with $ref' => sub {
     my ($res, $error);
-    my $v = Variemon->new({
+    my $v = Valiemon->new({
         type => 'object',
         definitions => {
             name => { type => 'string', default => 'anonymous' },
@@ -63,7 +63,7 @@ subtest 'fillin default at toplevel' => sub {
         # > This keyword MAY be used in root schemas, and in any subschemas.
         # http://json-schema.org/latest/json-schema-validation.html#anchor103
         local $TODO = 'currently default keyword not support not object value at top level';
-        my $v = Variemon->new({ type => 'integer', default => 1 });
+        my $v = Valiemon->new({ type => 'integer', default => 1 });
         my $d = undef;
         $v->validate($d);
         is $d, 1;

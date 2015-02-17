@@ -3,13 +3,13 @@ use warnings;
 
 use Test::More;
 
-use Variemon;
+use Valiemon;
 
-use_ok 'Variemon::Attributes::Pattern';
+use_ok 'Valiemon::Attributes::Pattern';
 
 subtest 'validate pattern' => sub {
     my ($res, $error);
-    my $v = Variemon->new({ pattern => '^[abc][def]?$' });
+    my $v = Valiemon->new({ pattern => '^[abc][def]?$' });
 
     ($res, $error) = $v->validate('a');
     ok $res;
@@ -30,7 +30,7 @@ subtest 'validate pattern' => sub {
 
 subtest 'ignore pattern' => sub {
     my ($res, $error);
-    my $v = Variemon->new({ pattern => 'abc' });
+    my $v = Valiemon->new({ pattern => 'abc' });
 
     ($res, $error) = $v->validate({});
     ok $res, 'object isnt a string';
@@ -56,7 +56,7 @@ subtest 'ignore pattern' => sub {
 subtest 'detect schema error' => sub {
     {
         eval {
-            Variemon->new({
+            Valiemon->new({
                 type => 'string',
                 pattern => [],
             })->validate('hoge');
@@ -66,7 +66,7 @@ subtest 'detect schema error' => sub {
 
     {
         eval {
-            Variemon->new({
+            Valiemon->new({
                 type => 'string',
                 pattern => {},
             })->validate('fuga');

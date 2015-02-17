@@ -3,13 +3,13 @@ use warnings;
 
 use Test::More;
 
-use Variemon;
+use Valiemon;
 
-use_ok 'Variemon::Attributes::Ref';
+use_ok 'Valiemon::Attributes::Ref';
 
 subtest 'validation with $ref referencing' => sub {
     my ($res, $err);
-    my $v = Variemon->new({
+    my $v = Valiemon->new({
         type => 'object',
         definitions => {
             person => {
@@ -43,7 +43,7 @@ subtest 'validation with $ref referencing' => sub {
 
 subtest 'validate with nested $ref referencing' => sub {
     my ($res, $err);
-    my $v = Variemon->new({
+    my $v = Valiemon->new({
         type => 'object',
         definitions => {
             person => {
@@ -113,7 +113,7 @@ subtest 'validate with nested $ref referencing' => sub {
 
 subtest 'reference recursively' => sub {
     my ($res, $err);
-    my $v = Variemon->new({
+    my $v = Valiemon->new({
         definitions => {
             foo => { '$ref' => '#/definitions/bar' },
             bar => { 'type' => 'integer' },

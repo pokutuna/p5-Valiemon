@@ -3,13 +3,13 @@ use warnings;
 
 use Test::More;
 
-use Variemon;
+use Valiemon;
 
-use_ok 'Variemon::Attributes::Type';
+use_ok 'Valiemon::Attributes::Type';
 
 subtest 'validate type object' => sub {
     my ($res, $err);
-    my $v = Variemon->new({ type => 'object' });
+    my $v = Valiemon->new({ type => 'object' });
     ($res, $err) = $v->validate({});
     ok $res, 'object is valid!';
     is $err, undef;

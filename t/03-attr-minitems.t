@@ -3,13 +3,13 @@ use warnings;
 
 use Test::More;
 
-use Variemon;
+use Valiemon;
 
-use_ok 'Variemon::Attributes::MinItems';
+use_ok 'Valiemon::Attributes::MinItems';
 
 subtest 'minItems' => sub {
     my ($res, $err);
-    my $v = Variemon->new({
+    my $v = Valiemon->new({
         type => 'array',
         minItems => 2,
     });
@@ -30,13 +30,13 @@ subtest 'minItems' => sub {
 subtest 'detect schema error' => sub {
     {
         eval {
-            Variemon->new({ minItems => 3.14 })->validate([]);
+            Valiemon->new({ minItems => 3.14 })->validate([]);
         };
         like $@, qr/`minItems` must be/;
     }
     {
         eval {
-            Variemon->new({ minItems => {} })->validate([]);
+            Valiemon->new({ minItems => {} })->validate([]);
         };
         like $@, qr/`minItems` must be/;
     }

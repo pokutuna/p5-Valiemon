@@ -1,8 +1,8 @@
-package Variemon::Attributes::Minimum;
+package Valiemon::Attributes::Minimum;
 use strict;
 use warnings;
 use utf8;
-use parent qw(Variemon::Attributes);
+use parent qw(Valiemon::Attributes);
 
 sub attr_name { 'minimum' }
 

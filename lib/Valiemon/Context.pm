@@ -1,9 +1,9 @@
-package Variemon::Context;
+package Valiemon::Context;
 use strict;
 use warnings;
 use utf8;
 
-use Variemon::ValidationError;
+use Valiemon::ValidationError;
 
 use Class::Accessor::Lite (
     ro => [qw(root_validator root_schema errors positions)],
@@ -51,7 +51,7 @@ sub position {
 
 sub generate_error {
     my ($self, $attr) = @_;
-    return Variemon::ValidationError->new($attr, $self->position);
+    return Valiemon::ValidationError->new($attr, $self->position);
 }
 
 sub in_attr ($&) {
@@ -73,8 +73,8 @@ sub in ($&) {
 
 sub sub_validator {
     my ($self, $sub_schema) = @_;
-    require Variemon;
-    return Variemon->new(
+    require Valiemon;
+    return Valiemon->new(
         $sub_schema,
         $self->rv->options, # inherit options
     );

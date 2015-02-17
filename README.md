@@ -1,14 +1,14 @@
 [![Build Status](https://travis-ci.org/pokutuna/p5-Variemon.svg?branch=master)](https://travis-ci.org/pokutuna/p5-Variemon)
 # NAME
 
-Variemon - data validator based on json schema
+Valiemon - data validator based on json schema
 
 # SYNOPSIS
 
-    use Variemon;
+    use Valiemon;
 
     # create instance with schema definition
-    my $validator = Variemon->new({
+    my $validator = Valiemon->new({
         type => 'object',
         properties => {
             name  => { type => 'string'  },

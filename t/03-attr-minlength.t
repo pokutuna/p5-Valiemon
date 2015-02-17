@@ -3,13 +3,13 @@ use warnings;
 
 use Test::More;
 
-use Variemon;
+use Valiemon;
 
-use_ok 'Variemon::Attributes::MinLength';
+use_ok 'Valiemon::Attributes::MinLength';
 
 subtest 'validate minLength' => sub {
     my ($res, $err);
-    my $v = Variemon->new({ minLength => 6 });
+    my $v = Valiemon->new({ minLength => 6 });
 
     ($res, $err) = $v->validate('unagi');
     ok !$res;
@@ -27,13 +27,13 @@ subtest 'validate minLength' => sub {
 subtest 'detect schema error' => sub {
     {
         eval {
-            Variemon->new({ minLength => -1 })->validate('a');
+            Valiemon->new({ minLength => -1 })->validate('a');
         };
         like $@, qr/`minLength` must be/;
     }
     {
         eval {
-            Variemon->new({ minLength => {} })->validate('b');
+            Valiemon->new({ minLength => {} })->validate('b');
         };
         like $@, qr/`minLength` must be/;
     }

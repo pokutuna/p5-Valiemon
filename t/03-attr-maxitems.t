@@ -3,13 +3,13 @@ use warnings;
 
 use Test::More;
 
-use Variemon;
+use Valiemon;
 
-use_ok 'Variemon::Attributes::MaxItems';
+use_ok 'Valiemon::Attributes::MaxItems';
 
 subtest 'minItems' => sub {
     my ($res, $err);
-    my $v = Variemon->new({
+    my $v = Valiemon->new({
         type => 'array',
         maxItems => 4,
     });
@@ -30,13 +30,13 @@ subtest 'minItems' => sub {
 subtest 'detect schema error' => sub {
     {
         eval {
-            Variemon->new({ maxItems => 3.14 })->validate([]);
+            Valiemon->new({ maxItems => 3.14 })->validate([]);
         };
         like $@, qr/`maxItems` must be/;
     }
     {
         eval {
-            Variemon->new({ maxItems => {} })->validate([]);
+            Valiemon->new({ maxItems => {} })->validate([]);
         };
         like $@, qr/`maxItems` must be/;
     }

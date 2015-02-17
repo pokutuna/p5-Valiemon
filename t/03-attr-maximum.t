@@ -3,13 +3,13 @@ use warnings;
 
 use Test::More;
 
-use Variemon;
+use Valiemon;
 
-use_ok 'Variemon::Attributes::Maximum';
+use_ok 'Valiemon::Attributes::Maximum';
 
 subtest 'maximum' => sub {
     my ($res, $err);
-    my $v = Variemon->new({
+    my $v = Valiemon->new({
         type => 'integer',
         maximum => 3,
     });
@@ -28,7 +28,7 @@ subtest 'maximum' => sub {
 
 subtest 'maximum with exclusiveMaximum' => sub {
     my ($res, $err);
-    my $v = Variemon->new({
+    my $v = Valiemon->new({
         type => 'integer',
         maximum => 3,
         exclusiveMaximum => 1,

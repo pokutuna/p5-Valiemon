@@ -3,13 +3,13 @@ use warnings;
 
 use Test::More;
 
-use Variemon;
+use Valiemon;
 
-use_ok 'Variemon::Attributes::Format';
+use_ok 'Valiemon::Attributes::Format';
 
 subtest 'date-time' => sub {
     my ($res, $error);
-    my $v = Variemon->new({ format => 'date-time' });
+    my $v = Valiemon->new({ format => 'date-time' });
 
     subtest 'UTC' => sub {
         ($res, $error) = $v->validate('2014-01-01T00:00:00Z');
@@ -49,7 +49,7 @@ subtest 'date-time' => sub {
 
 subtest 'uri' => sub {
     my ($res, $error);
-    my $v = Variemon->new({ format => 'uri' });
+    my $v = Valiemon->new({ format => 'uri' });
 
     subtest 'valid' => sub {
         for my $input (qw(
@@ -85,7 +85,7 @@ subtest 'uri' => sub {
 subtest 'invalid format' => sub {
     my ($res, $error);
 
-    my $v = Variemon->new({ format => 'the-invalid-format' });
+    my $v = Valiemon->new({ format => 'the-invalid-format' });
     eval {
         $v->validate('a');
     };
