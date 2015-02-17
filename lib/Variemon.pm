@@ -98,13 +98,7 @@ __END__
 
 =head1 NAME
 
-Variemon - It's a validation module based on JSON Schema
-
-http://json-schema.org/latest/json-schema-core.html
-http://json-schema.org/latest/json-schema-validation.html
-
-This module is under development!
-So there are some unimplemented features, and module api will be changed.
+Variemon - data validator based on json schema
 
 =head1 SYNOPSIS
 
@@ -130,6 +124,11 @@ So there are some unimplemented features, and module api will be changed.
     # $res   => 0
     # $error => object Variemon::ValidationError
     # $error->position => '/properties/price/type'
+
+=head1 DESCRIPTION
+
+This module is under development!
+So there are some unimplemented features, and module api will be changed.
 
 =head1 LICENSE
 

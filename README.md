@@ -1,13 +1,7 @@
 [![Build Status](https://travis-ci.org/pokutuna/p5-Variemon.svg?branch=master)](https://travis-ci.org/pokutuna/p5-Variemon)
 # NAME
 
-Variemon - It's a validation module based on JSON Schema
-
-http://json-schema.org/latest/json-schema-core.html
-http://json-schema.org/latest/json-schema-validation.html
-
-This module is under development!
-So there are some unimplemented features, and module api will be changed.
+Variemon - data validator based on json schema
 
 # SYNOPSIS
 
@@ -33,6 +27,11 @@ So there are some unimplemented features, and module api will be changed.
     # $res   => 0
     # $error => object Variemon::ValidationError
     # $error->position => '/properties/price/type'
+
+# DESCRIPTION
+
+This module is under development!
+So there are some unimplemented features, and module api will be changed.
 
 # LICENSE
 

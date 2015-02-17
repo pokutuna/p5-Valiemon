@@ -1,5 +1,5 @@
 {
-   "abstract" : "It's a validation module based on JSON Schema",
+   "abstract" : "data validator based on json schema",
    "author" : [
       "pokutuna <popopopopokutuna@gmail.com>"
    ],
