@@ -1,8 +1,8 @@
-package Variemon::Attributes::Enum;
+package Valiemon::Attributes::Enum;
 use strict;
 use warnings;
 use utf8;
-use parent qw(Variemon::Attributes);
+use parent qw(Valiemon::Attributes);
 
 use Carp qw(croak);
 use List::MoreUtils qw(any);

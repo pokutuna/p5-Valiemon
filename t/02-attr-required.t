@@ -3,13 +3,13 @@ use warnings;
 
 use Test::More;
 
-use Variemon;
+use Valiemon;
 
-use_ok 'Variemon::Attributes::Required';
+use_ok 'Valiemon::Attributes::Required';
 
 subtest 'validate required' => sub {
     my ($res, $error);
-    my $v = Variemon->new({ required => [qw(key)] });
+    my $v = Valiemon->new({ required => [qw(key)] });
 
     ($res, $error) = $v->validate({ key => 'hoge' });
     ok $res, 'required constraint satisifed';
@@ -26,7 +26,7 @@ subtest 'validate required' => sub {
 
 subtest 'validate required with object' => sub {
     my ($res, $error);
-    my $v = Variemon->new({
+    my $v = Valiemon->new({
         type => 'object',
         properties => {
             name => { type => 'string' },
@@ -51,7 +51,7 @@ subtest 'validate required with object' => sub {
 subtest 'detect schema error' => sub {
     {
         eval {
-            Variemon->new({
+            Valiemon->new({
                 type => 'object',
                 properties => { name => { type => 'string' } },
                 required => [], # empty
@@ -61,7 +61,7 @@ subtest 'detect schema error' => sub {
     }
     {
         eval {
-            Variemon->new({
+            Valiemon->new({
                 type => 'object',
                 properties => { name => { type => 'string' } },
                 required => { name => 1 }, # not array

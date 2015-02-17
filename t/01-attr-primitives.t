@@ -3,15 +3,15 @@ use warnings;
 
 use Test::More;
 
-use Variemon;
+use Valiemon;
 use JSON::XS qw();
 use JSON::PP qw();
 use Types::Serialiser;
 
-use_ok 'Variemon::Primitives';
+use_ok 'Valiemon::Primitives';
 
 subtest 'is_object' => sub {
-    my $p = Variemon::Primitives->new;
+    my $p = Valiemon::Primitives->new;
     ok  $p->is_object({});
     ok !$p->is_object([]);
     ok !$p->is_object('hello');
@@ -22,7 +22,7 @@ subtest 'is_object' => sub {
 };
 
 subtest 'is_array' => sub {
-    my $p = Variemon::Primitives->new;
+    my $p = Valiemon::Primitives->new;
     ok !$p->is_array({});
     ok  $p->is_array([]);
     ok !$p->is_array('hello');
@@ -33,7 +33,7 @@ subtest 'is_array' => sub {
 };
 
 subtest 'is_string' => sub {
-    my $p = Variemon::Primitives->new;
+    my $p = Valiemon::Primitives->new;
     ok !$p->is_string({});
     ok !$p->is_string([]);
     ok  $p->is_string('hello');
@@ -47,7 +47,7 @@ subtest 'is_string' => sub {
 };
 
 subtest 'is_number' => sub {
-    my $p = Variemon::Primitives->new;
+    my $p = Valiemon::Primitives->new;
     ok !$p->is_number({});
     ok !$p->is_number([]);
     ok !$p->is_number('hello');
@@ -61,7 +61,7 @@ subtest 'is_number' => sub {
 };
 
 subtest 'is_integer' => sub {
-    my $p = Variemon::Primitives->new;
+    my $p = Valiemon::Primitives->new;
     ok !$p->is_integer({});
     ok !$p->is_integer([]);
     ok !$p->is_integer('hello');
@@ -75,7 +75,7 @@ subtest 'is_integer' => sub {
 };
 
 subtest 'is_boolean' => sub {
-    my $p_perl = Variemon::Primitives->new(+{ use_json_boolean => 0 });
+    my $p_perl = Valiemon::Primitives->new(+{ use_json_boolean => 0 });
     ok  $p_perl->is_boolean(Types::Serialiser::true);
     ok  $p_perl->is_boolean(1);
     ok !$p_perl->is_boolean({});
@@ -83,7 +83,7 @@ subtest 'is_boolean' => sub {
     ok !$p_perl->is_boolean(\1);
     ok !$p_perl->is_boolean(\0);
 
-    my $p_json = Variemon::Primitives->new(+{ use_json_boolean => 1 });
+    my $p_json = Valiemon::Primitives->new(+{ use_json_boolean => 1 });
     ok  $p_json->is_boolean(Types::Serialiser::true);
     ok  $p_json->is_boolean(\1);
     ok  $p_json->is_boolean(\0);
@@ -93,7 +93,7 @@ subtest 'is_boolean' => sub {
 };
 
 subtest 'is_boolean_perl' => sub {
-    my $p = Variemon::Primitives->new;
+    my $p = Valiemon::Primitives->new;
     ok !$p->is_boolean_perl({});
     ok !$p->is_boolean_perl([]);
     ok !$p->is_boolean_perl('hello');
@@ -117,7 +117,7 @@ subtest 'is_boolean_perl' => sub {
 };
 
 subtest 'is_boolean_json' => sub {
-    my $p = Variemon::Primitives->new;
+    my $p = Valiemon::Primitives->new;
     ok !$p->is_boolean_json({});
     ok !$p->is_boolean_json([]);
     ok !$p->is_boolean_json('hello');
@@ -138,7 +138,7 @@ subtest 'is_boolean_json' => sub {
 };
 
 subtest 'is_null' => sub {
-    my $p = Variemon::Primitives->new;
+    my $p = Valiemon::Primitives->new;
     ok !$p->is_null({});
     ok !$p->is_null([]);
     ok !$p->is_null('hello');
@@ -149,7 +149,7 @@ subtest 'is_null' => sub {
 };
 
 subtest 'is_equal' => sub {
-    my $p = Variemon::Primitives->new;
+    my $p = Valiemon::Primitives->new;
 
     note 'null';
     ok !$p->is_equal(undef, {});

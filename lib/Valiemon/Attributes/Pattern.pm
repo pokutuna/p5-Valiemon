@@ -1,8 +1,8 @@
-package Variemon::Attributes::Pattern;
+package Valiemon::Attributes::Pattern;
 use strict;
 use warnings;
 use utf8;
-use parent qw(Variemon::Attributes);
+use parent qw(Valiemon::Attributes);
 
 use Carp qw(croak);
 

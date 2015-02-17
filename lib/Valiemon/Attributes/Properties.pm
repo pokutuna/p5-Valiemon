@@ -1,13 +1,13 @@
-package Variemon::Attributes::Properties;
+package Valiemon::Attributes::Properties;
 use strict;
 use warnings;
 use utf8;
-use parent qw(Variemon::Attributes);
+use parent qw(Valiemon::Attributes);
 
 use Carp qw(croak);
 use Clone qw(clone);
 use List::MoreUtils qw(all);
-use Variemon;
+use Valiemon;
 
 sub attr_name { 'properties' }
 

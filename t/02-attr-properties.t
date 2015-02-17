@@ -3,12 +3,12 @@ use warnings;
 
 use Test::More;
 
-use Variemon;
+use Valiemon;
 
-use_ok 'Variemon::Attributes::Properties';
+use_ok 'Valiemon::Attributes::Properties';
 
 subtest 'validate properties' => sub {
-    my $v = Variemon->new({
+    my $v = Valiemon->new({
         type => 'object',
         properties => {
             name  => { type => 'string'  },
@@ -27,7 +27,7 @@ subtest 'validate properties' => sub {
 
 subtest 'validate nested properties' => sub {
     my ($res, $err);
-    my $v = Variemon->new({
+    my $v = Valiemon->new({
         type => 'object',
         properties => {
             name  => {

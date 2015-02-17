@@ -3,13 +3,13 @@ use warnings;
 
 use Test::More;
 
-use Variemon;
+use Valiemon;
 
-use_ok 'Variemon::Attributes::Items';
+use_ok 'Valiemon::Attributes::Items';
 
 subtest 'validate array (schema)' => sub {
     my ($res, $err);
-    my $v = Variemon->new({
+    my $v = Valiemon->new({
         type => 'array',
         items => { type => 'integer' },
     });
@@ -29,7 +29,7 @@ subtest 'validate array (schema)' => sub {
 
 subtest 'validate array (index)' => sub {
     my ($res, $err);
-    my $v = Variemon->new({
+    my $v = Valiemon->new({
         type => 'array',
         items => [{type => 'integer'}, {type => 'object'}, {type => 'array'}],
     });
@@ -45,7 +45,7 @@ subtest 'validate array (index)' => sub {
 
 subtest 'validate array with $ref' => sub {
     my ($res, $err) = @_;
-    my $v = Variemon->new({
+    my $v = Valiemon->new({
         type => 'object',
         definitions => {
             array_item => {

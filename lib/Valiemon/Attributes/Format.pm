@@ -1,8 +1,8 @@
-package Variemon::Attributes::Format;
+package Valiemon::Attributes::Format;
 use strict;
 use warnings;
 use utf8;
-use parent qw(Variemon::Attributes);
+use parent qw(Valiemon::Attributes);
 
 use Carp qw(croak);
 use Data::Validate::URI qw();

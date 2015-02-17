@@ -3,12 +3,12 @@ use warnings;
 
 use Test::More;
 
-use Variemon;
+use Valiemon;
 
-use_ok 'Variemon::Attributes::AdditionalProperties';
+use_ok 'Valiemon::Attributes::AdditionalProperties';
 
 subtest 'additionalProperties=false' => sub {
-    my $v = Variemon->new({
+    my $v = Valiemon->new({
         type => 'object',
         properties => {
             name  => { type => 'string'  },
@@ -31,7 +31,7 @@ subtest 'additionalProperties=false' => sub {
 };
 
 subtest 'additionalProperties=true or not specified' => sub {
-    my $v = Variemon->new({
+    my $v = Valiemon->new({
         type => 'object',
         properties => {
             name  => { type => 'string'  },
@@ -45,7 +45,7 @@ subtest 'additionalProperties=true or not specified' => sub {
 };
 
 subtest 'not specified' => sub {
-    my $v = Variemon->new({
+    my $v = Valiemon->new({
         type => 'object',
         properties => {
             name  => { type => 'string'  },

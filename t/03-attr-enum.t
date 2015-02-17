@@ -3,13 +3,13 @@ use warnings;
 
 use Test::More;
 
-use Variemon;
+use Valiemon;
 
-use_ok 'Variemon::Attributes::Enum';
+use_ok 'Valiemon::Attributes::Enum';
 
 subtest 'validate enum' => sub {
     my ($res, $err);
-    my $v = Variemon->new({
+    my $v = Valiemon->new({
         enum => [1, 2, 4],
     });
 
@@ -32,7 +32,7 @@ subtest 'validate enum' => sub {
 
 subtest 'validate enum multi types' => sub {
     my ($res, $err);
-    my $v = Variemon->new({
+    my $v = Valiemon->new({
         enum => [2, 4, 'two', 'four', [ 2, 4 ], { 2 => 4 }],
     });
 
@@ -66,7 +66,7 @@ subtest 'validate enum multi types' => sub {
 
 subtest 'validate enum in object' => sub {
     my ($res, $err);
-    my $v = Variemon->new({
+    my $v = Valiemon->new({
         type => 'object',
         properties => {
             name => { type => 'string' },

@@ -1,8 +1,8 @@
-package Variemon::Attributes::MinItems;
+package Valiemon::Attributes::MinItems;
 use strict;
 use warnings;
 use utf8;
-use parent qw(Variemon::Attributes);
+use parent qw(Valiemon::Attributes);
 
 use Carp qw(croak);
 

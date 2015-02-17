@@ -1,10 +1,10 @@
 {
-   "abstract" : "It's a validation module based on JSON Schema",
+   "abstract" : "data validator based on json schema",
    "author" : [
       "pokutuna <popopopopokutuna@gmail.com>"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Minilla/v2.3.0, CPAN::Meta::Converter version 2.142690",
+   "generated_by" : "Minilla/v2.3.0, CPAN::Meta::Converter version 2.143240",
    "license" : [
       "mit"
    ],
@@ -12,7 +12,7 @@
       "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
       "version" : "2"
    },
-   "name" : "Variemon",
+   "name" : "Valiemon",
    "no_index" : {
       "directory" : [
          "t",
@@ -53,7 +53,7 @@
             "Scalar::Util" : "0",
             "Test::Deep" : "0",
             "Types::Serialiser" : "0",
-            "perl" : "5.008001"
+            "perl" : "5.012"
          }
       },
       "test" : {
@@ -65,16 +65,16 @@
    "release_status" : "unstable",
    "resources" : {
       "bugtracker" : {
-         "web" : "https://github.com/pokutuna/p5-Variemon/issues"
+         "web" : "https://github.com/pokutuna/p5-Valiemon/issues"
       },
-      "homepage" : "https://github.com/pokutuna/p5-Variemon",
+      "homepage" : "https://github.com/pokutuna/p5-Valiemon",
       "repository" : {
          "type" : "git",
-         "url" : "git://github.com/pokutuna/p5-Variemon.git",
-         "web" : "https://github.com/pokutuna/p5-Variemon"
+         "url" : "git://github.com/pokutuna/p5-Valiemon.git",
+         "web" : "https://github.com/pokutuna/p5-Valiemon"
       }
    },
-   "version" : "0.02",
+   "version" : "0.01",
    "x_contributors" : [
       "tarao <tarao.gnn@gmail.com>",
       "hitode909 <hitode909@gmail.com>",

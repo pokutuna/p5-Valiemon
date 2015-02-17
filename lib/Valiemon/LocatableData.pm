@@ -1,4 +1,4 @@
-package Variemon::LocatableData;
+package Valiemon::LocatableData;
 use strict;
 use warnings;
 use utf8;

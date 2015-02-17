@@ -1,9 +1,6 @@
-name = "Variemon"
-license="mit"
+name = 'Valiemon'
+license = "mit"
 badges = ["travis"]
-
-[FileGatherer]
-exclude_match = ['^releases/.*']
 
 [release]
 do_not_upload_to_cpan=true

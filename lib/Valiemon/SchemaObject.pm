@@ -3,7 +3,7 @@ use strict;
 use warnings;
 use utf8;
 
-use parent 'Variemon::LocatableData';
+use parent 'Valiemon::LocatableData';
 
 use Carp qw(croak);
 

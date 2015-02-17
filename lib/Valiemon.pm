@@ -1,5 +1,5 @@
-package Variemon;
-use 5.008001;
+package Valiemon;
+use 5.012;
 use strict;
 use warnings;
 use utf8;
@@ -7,16 +7,16 @@ use utf8;
 use Carp qw(croak);
 use Scalar::Util qw(blessed);
 
-use Variemon::Primitives;
-use Variemon::Context;
-use Variemon::SchemaObject;
-use Variemon::Attributes qw(attr);
+use Valiemon::Primitives;
+use Valiemon::Context;
+use Valiemon::SchemaObject;
+use Valiemon::Attributes qw(attr);
 
 use Class::Accessor::Lite (
     ro => [qw(schema options pos schema_cache)],
 );
 
-our $VERSION = "0.02";
+our $VERSION = "0.01";
 
 sub new {
     my ($class, $in_schema, $options) = @_;
@@ -33,7 +33,7 @@ sub new {
 sub validate {
     my ($self, $data, $context) = @_;
 
-    $context //= Variemon::Context->new($self, $self->schema);
+    $context //= Valiemon::Context->new($self, $self->schema);
 
     for my $key (keys %{$self->schema->raw}) {
         my $attr = attr($key);
@@ -53,7 +53,7 @@ sub validate {
 
 sub prims {
     my ($self) = @_;
-    return $self->{prims} //= Variemon::Primitives->new(
+    return $self->{prims} //= Valiemon::Primitives->new(
         $self->options
     );
 }
@@ -66,20 +66,14 @@ __END__
 
 =head1 NAME
 
-Variemon - It's a validation module based on JSON Schema
-
-http://json-schema.org/latest/json-schema-core.html
-http://json-schema.org/latest/json-schema-validation.html
-
-This module is under development!
-So there are some unimplemented features, and module api will be changed.
+Valiemon - data validator based on json schema
 
 =head1 SYNOPSIS
 
-    use Variemon;
+    use Valiemon;
 
     # create instance with schema definition
-    my $validator = Variemon->new({
+    my $validator = Valiemon->new({
         type => 'object',
         properties => {
             name  => { type => 'string'  },
@@ -96,8 +90,13 @@ So there are some unimplemented features, and module api will be changed.
 
     ($res, $error) = $validator->validate({ name => 'tendon', price => 'hoge' });
     # $res   => 0
-    # $error => object Variemon::ValidationError
+    # $error => object Valiemon::ValidationError
     # $error->position => '/properties/price/type'
+
+=head1 DESCRIPTION
+
+This module is under development!
+So there are some unimplemented features, and module api will be changed.
 
 =head1 LICENSE
 

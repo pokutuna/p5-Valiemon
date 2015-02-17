@@ -3,9 +3,9 @@ use warnings;
 
 use Test::More;
 
-use Variemon;
+use Valiemon;
 
-use_ok 'Variemon::Context';
+use_ok 'Valiemon::Context';
 
 my $schema = {
     type => 'object',
@@ -25,17 +25,17 @@ my $schema = {
 };
 
 subtest 'new' => sub {
-    my $v = Variemon->new($schema);
-    my $c = Variemon::Context->new($v, $v->schema);
+    my $v = Valiemon->new($schema);
+    my $c = Valiemon::Context->new($v, $v->schema);
     is $c->{root_validator}, $v;
 };
 
 subtest 'sub_validator' => sub {
     my $opts = { use_json_boolean => 1 };
-    my $v = Variemon->new($schema, $opts);
+    my $v = Valiemon->new($schema, $opts);
     is_deeply $v->options, $opts;
 
-    my $c = Variemon::Context->new($v, $v->schema);
+    my $c = Valiemon::Context->new($v, $v->schema);
     my $sub_schema = $v->schema->resolve_ref('#/definitions/person');
     my $sv = $c->sub_validator($sub_schema);
     is_deeply $sv->options, $opts, 'inherit options from root validator in context';

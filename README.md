@@ -1,20 +1,14 @@
-[![Build Status](https://travis-ci.org/pokutuna/p5-Variemon.svg?branch=master)](https://travis-ci.org/pokutuna/p5-Variemon)
+[![Build Status](https://travis-ci.org/pokutuna/p5-Valiemon.svg?branch=master)](https://travis-ci.org/pokutuna/p5-Valiemon)
 # NAME
 
-Variemon - It's a validation module based on JSON Schema
-
-http://json-schema.org/latest/json-schema-core.html
-http://json-schema.org/latest/json-schema-validation.html
-
-This module is under development!
-So there are some unimplemented features, and module api will be changed.
+Valiemon - data validator based on json schema
 
 # SYNOPSIS
 
-    use Variemon;
+    use Valiemon;
 
     # create instance with schema definition
-    my $validator = Variemon->new({
+    my $validator = Valiemon->new({
         type => 'object',
         properties => {
             name  => { type => 'string'  },
@@ -31,8 +25,13 @@ So there are some unimplemented features, and module api will be changed.
 
     ($res, $error) = $validator->validate({ name => 'tendon', price => 'hoge' });
     # $res   => 0
-    # $error => object Variemon::ValidationError
+    # $error => object Valiemon::ValidationError
     # $error->position => '/properties/price/type'
+
+# DESCRIPTION
+
+This module is under development!
+So there are some unimplemented features, and module api will be changed.
 
 # LICENSE
 
