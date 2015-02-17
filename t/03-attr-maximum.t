@@ -3,13 +3,13 @@ use warnings;
 
 use Test::More;
 
-use JSON::Schema::Validator;
+use Variemon;
 
-use_ok 'JSON::Schema::Validator::Attributes::Maximum';
+use_ok 'Variemon::Attributes::Maximum';
 
 subtest 'maximum' => sub {
     my ($res, $err);
-    my $v = JSON::Schema::Validator->new({
+    my $v = Variemon->new({
         type => 'integer',
         maximum => 3,
     });
@@ -28,7 +28,7 @@ subtest 'maximum' => sub {
 
 subtest 'maximum with exclusiveMaximum' => sub {
     my ($res, $err);
-    my $v = JSON::Schema::Validator->new({
+    my $v = Variemon->new({
         type => 'integer',
         maximum => 3,
         exclusiveMaximum => 1,

@@ -1,6 +1,6 @@
 # NAME
 
-JSON::Schema::Validator - It's a validation module based on JSON Schema
+Variemon - It's a validation module based on JSON Schema
 
 http://json-schema.org/latest/json-schema-core.html
 http://json-schema.org/latest/json-schema-validation.html
@@ -10,10 +10,10 @@ So there are some unimplemented features, and module api will be changed.
 
 # SYNOPSIS
 
-    use JSON::Schema::Validator;
+    use Variemon;
 
     # create instance with schema definition
-    my $validator = JSON::Schema::Validator->new({
+    my $validator = Variemon->new({
         type => 'object',
         properties => {
             name  => { type => 'string'  },

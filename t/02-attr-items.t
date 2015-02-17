@@ -3,13 +3,13 @@ use warnings;
 
 use Test::More;
 
-use JSON::Schema::Validator;
+use Variemon;
 
-use_ok 'JSON::Schema::Validator::Attributes::Items';
+use_ok 'Variemon::Attributes::Items';
 
 subtest 'validate array (schema)' => sub {
     my ($res, $err);
-    my $v = JSON::Schema::Validator->new({
+    my $v = Variemon->new({
         type => 'array',
         items => { type => 'integer' },
     });
@@ -29,7 +29,7 @@ subtest 'validate array (schema)' => sub {
 
 subtest 'validate array (index)' => sub {
     my ($res, $err);
-    my $v = JSON::Schema::Validator->new({
+    my $v = Variemon->new({
         type => 'array',
         items => [{type => 'integer'}, {type => 'object'}, {type => 'array'}],
     });
@@ -45,7 +45,7 @@ subtest 'validate array (index)' => sub {
 
 subtest 'validate array with $ref' => sub {
     my ($res, $err) = @_;
-    my $v = JSON::Schema::Validator->new({
+    my $v = Variemon->new({
         type => 'object',
         definitions => {
             array_item => {

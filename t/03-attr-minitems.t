@@ -3,13 +3,13 @@ use warnings;
 
 use Test::More;
 
-use JSON::Schema::Validator;
+use Variemon;
 
-use_ok 'JSON::Schema::Validator::Attributes::MinItems';
+use_ok 'Variemon::Attributes::MinItems';
 
 subtest 'minItems' => sub {
     my ($res, $err);
-    my $v = JSON::Schema::Validator->new({
+    my $v = Variemon->new({
         type => 'array',
         minItems => 2,
     });
@@ -30,13 +30,13 @@ subtest 'minItems' => sub {
 subtest 'detect schema error' => sub {
     {
         eval {
-            JSON::Schema::Validator->new({ minItems => 3.14 })->validate([]);
+            Variemon->new({ minItems => 3.14 })->validate([]);
         };
         like $@, qr/`minItems` must be/;
     }
     {
         eval {
-            JSON::Schema::Validator->new({ minItems => {} })->validate([]);
+            Variemon->new({ minItems => {} })->validate([]);
         };
         like $@, qr/`minItems` must be/;
     }

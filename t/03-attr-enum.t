@@ -3,13 +3,13 @@ use warnings;
 
 use Test::More;
 
-use JSON::Schema::Validator;
+use Variemon;
 
-use_ok 'JSON::Schema::Validator::Attributes::Enum';
+use_ok 'Variemon::Attributes::Enum';
 
 subtest 'validate enum' => sub {
     my ($res, $err);
-    my $v = JSON::Schema::Validator->new({
+    my $v = Variemon->new({
         enum => [1, 2, 4],
     });
 
@@ -32,7 +32,7 @@ subtest 'validate enum' => sub {
 
 subtest 'validate enum multi types' => sub {
     my ($res, $err);
-    my $v = JSON::Schema::Validator->new({
+    my $v = Variemon->new({
         enum => [2, 4, 'two', 'four', [ 2, 4 ], { 2 => 4 }],
     });
 
@@ -66,7 +66,7 @@ subtest 'validate enum multi types' => sub {
 
 subtest 'validate enum in object' => sub {
     my ($res, $err);
-    my $v = JSON::Schema::Validator->new({
+    my $v = Variemon->new({
         type => 'object',
         properties => {
             name => { type => 'string' },

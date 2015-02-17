@@ -1,4 +1,4 @@
-package JSON::Schema::Validator::Primitives;
+package Variemon::Primitives;
 use strict;
 use warnings;
 use utf8;

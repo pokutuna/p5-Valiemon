@@ -3,13 +3,13 @@ use warnings;
 
 use Test::More;
 
-use JSON::Schema::Validator;
+use Variemon;
 
-use_ok 'JSON::Schema::Validator::Attributes::Format';
+use_ok 'Variemon::Attributes::Format';
 
 subtest 'date-time' => sub {
     my ($res, $error);
-    my $v = JSON::Schema::Validator->new({ format => 'date-time' });
+    my $v = Variemon->new({ format => 'date-time' });
 
     subtest 'UTC' => sub {
         ($res, $error) = $v->validate('2014-01-01T00:00:00Z');
@@ -49,7 +49,7 @@ subtest 'date-time' => sub {
 
 subtest 'uri' => sub {
     my ($res, $error);
-    my $v = JSON::Schema::Validator->new({ format => 'uri' });
+    my $v = Variemon->new({ format => 'uri' });
 
     subtest 'valid' => sub {
         for my $input (qw(
@@ -85,7 +85,7 @@ subtest 'uri' => sub {
 subtest 'invalid format' => sub {
     my ($res, $error);
 
-    my $v = JSON::Schema::Validator->new({ format => 'the-invalid-format' });
+    my $v = Variemon->new({ format => 'the-invalid-format' });
     eval {
         $v->validate('a');
     };

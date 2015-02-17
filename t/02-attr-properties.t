@@ -3,12 +3,12 @@ use warnings;
 
 use Test::More;
 
-use JSON::Schema::Validator;
+use Variemon;
 
-use_ok 'JSON::Schema::Validator::Attributes::Properties';
+use_ok 'Variemon::Attributes::Properties';
 
 subtest 'validate properties' => sub {
-    my $v = JSON::Schema::Validator->new({
+    my $v = Variemon->new({
         type => 'object',
         properties => {
             name  => { type => 'string'  },
@@ -27,7 +27,7 @@ subtest 'validate properties' => sub {
 
 subtest 'validate nested properties' => sub {
     my ($res, $err);
-    my $v = JSON::Schema::Validator->new({
+    my $v = Variemon->new({
         type => 'object',
         properties => {
             name  => {

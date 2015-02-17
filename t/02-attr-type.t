@@ -3,13 +3,13 @@ use warnings;
 
 use Test::More;
 
-use JSON::Schema::Validator;
+use Variemon;
 
-use_ok 'JSON::Schema::Validator::Attributes::Type';
+use_ok 'Variemon::Attributes::Type';
 
 subtest 'validate type object' => sub {
     my ($res, $err);
-    my $v = JSON::Schema::Validator->new({ type => 'object' });
+    my $v = Variemon->new({ type => 'object' });
     ($res, $err) = $v->validate({});
     ok $res, 'object is valid!';
     is $err, undef;

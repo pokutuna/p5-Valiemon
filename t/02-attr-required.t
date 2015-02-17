@@ -3,13 +3,13 @@ use warnings;
 
 use Test::More;
 
-use JSON::Schema::Validator;
+use Variemon;
 
-use_ok 'JSON::Schema::Validator::Attributes::Required';
+use_ok 'Variemon::Attributes::Required';
 
 subtest 'validate required' => sub {
     my ($res, $error);
-    my $v = JSON::Schema::Validator->new({ required => [qw(key)] });
+    my $v = Variemon->new({ required => [qw(key)] });
 
     ($res, $error) = $v->validate({ key => 'hoge' });
     ok $res, 'required constraint satisifed';
@@ -26,7 +26,7 @@ subtest 'validate required' => sub {
 
 subtest 'validate required with object' => sub {
     my ($res, $error);
-    my $v = JSON::Schema::Validator->new({
+    my $v = Variemon->new({
         type => 'object',
         properties => {
             name => { type => 'string' },
@@ -51,7 +51,7 @@ subtest 'validate required with object' => sub {
 subtest 'detect schema error' => sub {
     {
         eval {
-            JSON::Schema::Validator->new({
+            Variemon->new({
                 type => 'object',
                 properties => { name => { type => 'string' } },
                 required => [], # empty
@@ -61,7 +61,7 @@ subtest 'detect schema error' => sub {
     }
     {
         eval {
-            JSON::Schema::Validator->new({
+            Variemon->new({
                 type => 'object',
                 properties => { name => { type => 'string' } },
                 required => { name => 1 }, # not array

@@ -1,4 +1,4 @@
-package JSON::Schema::Validator::Attributes;
+package Variemon::Attributes;
 use strict;
 use warnings;
 use utf8;
@@ -6,7 +6,7 @@ use utf8;
 use Carp qw(croak);
 use Exporter qw(import);
 use Class::Load qw(is_class_loaded try_load_class);
-use JSON::Schema::Validator::ValidationError;
+use Variemon::ValidationError;
 
 our @EXPORT_OK = qw(attr);
 

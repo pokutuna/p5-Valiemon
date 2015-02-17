@@ -22,7 +22,7 @@ my %args = (
     },
 
     name            => 'JSON-Schema-Validator',
-    module_name     => 'JSON::Schema::Validator',
+    module_name     => 'Variemon',
     allow_pureperl => 0,
 
     script_files => [glob('script/*'), glob('bin/*')],

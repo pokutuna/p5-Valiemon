@@ -1,13 +1,13 @@
-package JSON::Schema::Validator;
+package Variemon;
 use 5.008001;
 use strict;
 use warnings;
 use utf8;
 
 use Carp qw(croak);
-use JSON::Schema::Validator::Primitives;
-use JSON::Schema::Validator::Context;
-use JSON::Schema::Validator::Attributes qw(attr);
+use Variemon::Primitives;
+use Variemon::Context;
+use Variemon::Attributes qw(attr);
 
 use Class::Accessor::Lite (
     ro => [qw(schema options pos schema_cache)],
@@ -33,7 +33,7 @@ sub validate {
     my ($self, $data, $context) = @_;
     my $schema = $self->schema;
 
-    $context //= JSON::Schema::Validator::Context->new($self, $schema);
+    $context //= Variemon::Context->new($self, $schema);
 
     for my $key (keys %{$schema}) {
         my $attr = attr($key);
@@ -53,7 +53,7 @@ sub validate {
 
 sub prims {
     my ($self) = @_;
-    return $self->{prims} //= JSON::Schema::Validator::Primitives->new(
+    return $self->{prims} //= Variemon::Primitives->new(
         $self->options
     );
 }

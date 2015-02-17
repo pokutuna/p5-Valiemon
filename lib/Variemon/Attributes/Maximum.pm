@@ -1,8 +1,8 @@
-package JSON::Schema::Validator::Attributes::Maximum;
+package Variemon::Attributes::Maximum;
 use strict;
 use warnings;
 use utf8;
-use parent qw(JSON::Schema::Validator::Attributes);
+use parent qw(Variemon::Attributes);
 
 sub attr_name { 'maximum' }
 

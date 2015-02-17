@@ -3,13 +3,13 @@ use warnings;
 
 use Test::More;
 
-use JSON::Schema::Validator;
+use Variemon;
 
-use_ok 'JSON::Schema::Validator::Attributes::MaxItems';
+use_ok 'Variemon::Attributes::MaxItems';
 
 subtest 'minItems' => sub {
     my ($res, $err);
-    my $v = JSON::Schema::Validator->new({
+    my $v = Variemon->new({
         type => 'array',
         maxItems => 4,
     });
@@ -30,13 +30,13 @@ subtest 'minItems' => sub {
 subtest 'detect schema error' => sub {
     {
         eval {
-            JSON::Schema::Validator->new({ maxItems => 3.14 })->validate([]);
+            Variemon->new({ maxItems => 3.14 })->validate([]);
         };
         like $@, qr/`maxItems` must be/;
     }
     {
         eval {
-            JSON::Schema::Validator->new({ maxItems => {} })->validate([]);
+            Variemon->new({ maxItems => {} })->validate([]);
         };
         like $@, qr/`maxItems` must be/;
     }

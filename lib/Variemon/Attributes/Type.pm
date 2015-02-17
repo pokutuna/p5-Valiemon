@@ -1,8 +1,8 @@
-package JSON::Schema::Validator::Attributes::Type;
+package Variemon::Attributes::Type;
 use strict;
 use warnings;
 use utf8;
-use parent qw(JSON::Schema::Validator::Attributes);
+use parent qw(Variemon::Attributes);
 
 use List::MoreUtils qw(any);
 
