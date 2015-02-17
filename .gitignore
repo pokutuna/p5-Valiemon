@@ -31,3 +31,4 @@ MYMETA.*
 /.build
 !Build/
 !META.json
+/Valiemon-*

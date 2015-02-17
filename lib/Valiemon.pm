@@ -98,14 +98,14 @@ __END__
 
 =head1 NAME
 
-Variemon - data validator based on json schema
+Valiemon - data validator based on json schema
 
 =head1 SYNOPSIS
 
-    use Variemon;
+    use Valiemon;
 
     # create instance with schema definition
-    my $validator = Variemon->new({
+    my $validator = Valiemon->new({
         type => 'object',
         properties => {
             name  => { type => 'string'  },
@@ -122,7 +122,7 @@ Variemon - data validator based on json schema
 
     ($res, $error) = $validator->validate({ name => 'tendon', price => 'hoge' });
     # $res   => 0
-    # $error => object Variemon::ValidationError
+    # $error => object Valiemon::ValidationError
     # $error->position => '/properties/price/type'
 
 =head1 DESCRIPTION

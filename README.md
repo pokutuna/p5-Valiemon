@@ -25,7 +25,7 @@ Valiemon - data validator based on json schema
 
     ($res, $error) = $validator->validate({ name => 'tendon', price => 'hoge' });
     # $res   => 0
-    # $error => object Variemon::ValidationError
+    # $error => object Valiemon::ValidationError
     # $error->position => '/properties/price/type'
 
 # DESCRIPTION
