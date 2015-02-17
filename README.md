@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/pokutuna/p5-JSON-Schema-Validator.svg?branch=master)](https://travis-ci.org/pokutuna/p5-JSON-Schema-Validator)
+[![Build Status](https://travis-ci.org/pokutuna/p5-Variemon.svg?branch=master)](https://travis-ci.org/pokutuna/p5-Variemon)
 # NAME
 
 Variemon - It's a validation module based on JSON Schema
