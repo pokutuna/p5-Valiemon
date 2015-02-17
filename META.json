@@ -65,13 +65,13 @@
    "release_status" : "unstable",
    "resources" : {
       "bugtracker" : {
-         "web" : "https://github.com/pokutuna/p5-JSON-Schema-Validator/issues"
+         "web" : "https://github.com/pokutuna/p5-Variemon/issues"
       },
-      "homepage" : "https://github.com/pokutuna/p5-JSON-Schema-Validator",
+      "homepage" : "https://github.com/pokutuna/p5-Variemon",
       "repository" : {
          "type" : "git",
-         "url" : "git://github.com/pokutuna/p5-JSON-Schema-Validator.git",
-         "web" : "https://github.com/pokutuna/p5-JSON-Schema-Validator"
+         "url" : "git://github.com/pokutuna/p5-Variemon.git",
+         "web" : "https://github.com/pokutuna/p5-Variemon"
       }
    },
    "version" : "0.02",
