@@ -98,7 +98,7 @@ __END__
 
 =head1 NAME
 
-JSON::Schema::Validator - It's a validation module based on JSON Schema
+Variemon - It's a validation module based on JSON Schema
 
 http://json-schema.org/latest/json-schema-core.html
 http://json-schema.org/latest/json-schema-validation.html
@@ -108,10 +108,10 @@ So there are some unimplemented features, and module api will be changed.
 
 =head1 SYNOPSIS
 
-    use JSON::Schema::Validator;
+    use Variemon;
 
     # create instance with schema definition
-    my $validator = JSON::Schema::Validator->new({
+    my $validator = Variemon->new({
         type => 'object',
         properties => {
             name  => { type => 'string'  },
@@ -128,7 +128,7 @@ So there are some unimplemented features, and module api will be changed.
 
     ($res, $error) = $validator->validate({ name => 'tendon', price => 'hoge' });
     # $res   => 0
-    # $error => object JSON::Schema::Validation::Error
+    # $error => object Variemon::ValidationError
     # $error->position => '/properties/price/type'
 
 =head1 LICENSE
