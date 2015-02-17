@@ -21,7 +21,7 @@ my %args = (
         'Module::Build' => 0.38,
     },
 
-    name            => 'JSON-Schema-Validator',
+    name            => 'Variemon',
     module_name     => 'Variemon',
     allow_pureperl => 0,
 

@@ -30,7 +30,7 @@ So there are some unimplemented features, and module api will be changed.
 
     ($res, $error) = $validator->validate({ name => 'tendon', price => 'hoge' });
     # $res   => 0
-    # $error => object JSON::Schema::Validation::Error
+    # $error => object Variemon::ValidationError
     # $error->position => '/properties/price/type'
 
 # LICENSE
