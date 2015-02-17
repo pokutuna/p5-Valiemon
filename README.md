@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/pokutuna/p5-JSON-Schema-Validator.png?branch=master)](https://travis-ci.org/pokutuna/p5-JSON-Schema-Validator)
 # NAME
 
 JSON::Schema::Validator - It's a validation module based on JSON Schema
