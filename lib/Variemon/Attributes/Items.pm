@@ -1,12 +1,12 @@
-package JSON::Schema::Validator::Attributes::Items;
+package Variemon::Attributes::Items;
 use strict;
 use warnings;
 use utf8;
-use parent qw(JSON::Schema::Validator::Attributes);
+use parent qw(Variemon::Attributes);
 
 use Carp qw(croak);
 use List::MoreUtils qw(all);
-use JSON::Schema::Validator;
+use Variemon;
 
 sub attr_name { 'items' }
 

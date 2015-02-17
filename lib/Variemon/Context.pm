@@ -1,9 +1,9 @@
-package JSON::Schema::Validator::Context;
+package Variemon::Context;
 use strict;
 use warnings;
 use utf8;
 
-use JSON::Schema::Validator::ValidationError;
+use Variemon::ValidationError;
 
 use Class::Accessor::Lite (
     ro => [qw(root_validator root_schema errors positions)],
@@ -51,7 +51,7 @@ sub position {
 
 sub generate_error {
     my ($self, $attr) = @_;
-    return JSON::Schema::Validator::ValidationError->new($attr, $self->position);
+    return Variemon::ValidationError->new($attr, $self->position);
 }
 
 sub in_attr ($&) {
@@ -73,8 +73,8 @@ sub in ($&) {
 
 sub sub_validator {
     my ($self, $sub_schema) = @_;
-    require JSON::Schema::Validator;
-    return JSON::Schema::Validator->new(
+    require Variemon;
+    return Variemon->new(
         $sub_schema,
         $self->rv->options, # inherit options
     );

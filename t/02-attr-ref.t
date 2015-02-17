@@ -3,13 +3,13 @@ use warnings;
 
 use Test::More;
 
-use JSON::Schema::Validator;
+use Variemon;
 
-use_ok 'JSON::Schema::Validator::Attributes::Ref';
+use_ok 'Variemon::Attributes::Ref';
 
 subtest 'validation with $ref referencing' => sub {
     my ($res, $err);
-    my $v = JSON::Schema::Validator->new({
+    my $v = Variemon->new({
         type => 'object',
         definitions => {
             person => {
@@ -43,7 +43,7 @@ subtest 'validation with $ref referencing' => sub {
 
 subtest 'validate with nested $ref referencing' => sub {
     my ($res, $err);
-    my $v = JSON::Schema::Validator->new({
+    my $v = Variemon->new({
         type => 'object',
         definitions => {
             person => {
@@ -113,7 +113,7 @@ subtest 'validate with nested $ref referencing' => sub {
 
 subtest 'reference recursively' => sub {
     my ($res, $err);
-    my $v = JSON::Schema::Validator->new({
+    my $v = Variemon->new({
         definitions => {
             foo => { '$ref' => '#/definitions/bar' },
             bar => { 'type' => 'integer' },

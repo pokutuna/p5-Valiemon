@@ -1,8 +1,8 @@
-package JSON::Schema::Validator::Attributes::Enum;
+package Variemon::Attributes::Enum;
 use strict;
 use warnings;
 use utf8;
-use parent qw(JSON::Schema::Validator::Attributes);
+use parent qw(Variemon::Attributes);
 
 use Carp qw(croak);
 use List::MoreUtils qw(any);

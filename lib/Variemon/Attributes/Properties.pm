@@ -1,13 +1,13 @@
-package JSON::Schema::Validator::Attributes::Properties;
+package Variemon::Attributes::Properties;
 use strict;
 use warnings;
 use utf8;
-use parent qw(JSON::Schema::Validator::Attributes);
+use parent qw(Variemon::Attributes);
 
 use Carp qw(croak);
 use Clone qw(clone);
 use List::MoreUtils qw(all);
-use JSON::Schema::Validator;
+use Variemon;
 
 sub attr_name { 'properties' }
 

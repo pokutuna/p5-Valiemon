@@ -3,6 +3,6 @@ use warnings;
 
 use Test::More;
 
-use_ok 'JSON::Schema::Validator';
+use_ok 'Variemon';
 
 done_testing;

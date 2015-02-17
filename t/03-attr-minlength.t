@@ -3,13 +3,13 @@ use warnings;
 
 use Test::More;
 
-use JSON::Schema::Validator;
+use Variemon;
 
-use_ok 'JSON::Schema::Validator::Attributes::MinLength';
+use_ok 'Variemon::Attributes::MinLength';
 
 subtest 'validate minLength' => sub {
     my ($res, $err);
-    my $v = JSON::Schema::Validator->new({ minLength => 6 });
+    my $v = Variemon->new({ minLength => 6 });
 
     ($res, $err) = $v->validate('unagi');
     ok !$res;
@@ -27,13 +27,13 @@ subtest 'validate minLength' => sub {
 subtest 'detect schema error' => sub {
     {
         eval {
-            JSON::Schema::Validator->new({ minLength => -1 })->validate('a');
+            Variemon->new({ minLength => -1 })->validate('a');
         };
         like $@, qr/`minLength` must be/;
     }
     {
         eval {
-            JSON::Schema::Validator->new({ minLength => {} })->validate('b');
+            Variemon->new({ minLength => {} })->validate('b');
         };
         like $@, qr/`minLength` must be/;
     }

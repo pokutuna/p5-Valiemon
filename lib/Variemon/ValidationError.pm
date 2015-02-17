@@ -1,4 +1,4 @@
-package JSON::Schema::Validator::ValidationError;
+package Variemon::ValidationError;
 use strict;
 use warnings;
 use utf8;

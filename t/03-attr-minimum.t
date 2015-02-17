@@ -3,13 +3,13 @@ use warnings;
 
 use Test::More;
 
-use JSON::Schema::Validator;
+use Variemon;
 
-use_ok 'JSON::Schema::Validator::Attributes::Minimum';
+use_ok 'Variemon::Attributes::Minimum';
 
 subtest 'minimum' => sub {
     my ($res, $err);
-    my $v = JSON::Schema::Validator->new({
+    my $v = Variemon->new({
         type => 'integer',
         minimum => 3,
     });
@@ -28,7 +28,7 @@ subtest 'minimum' => sub {
 
 subtest 'minimum with exclusiveMinimum' => sub {
     my ($res, $err);
-    my $v = JSON::Schema::Validator->new({
+    my $v = Variemon->new({
         type => 'integer',
         minimum => 3,
         exclusiveMinimum => 1,
@@ -48,7 +48,7 @@ subtest 'minimum with exclusiveMinimum' => sub {
 
 subtest 'minimum with object propertie' => sub {
     my ($res, $err);
-    my $v = JSON::Schema::Validator->new({
+    my $v = Variemon->new({
         type => 'object',
         properties => {
             year => { type => 'integer', minimum => 1970 },

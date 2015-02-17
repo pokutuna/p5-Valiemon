@@ -1,8 +1,8 @@
-package JSON::Schema::Validator::Attributes::MinItems;
+package Variemon::Attributes::MinItems;
 use strict;
 use warnings;
 use utf8;
-use parent qw(JSON::Schema::Validator::Attributes);
+use parent qw(Variemon::Attributes);
 
 use Carp qw(croak);
 
