@@ -1,5 +1,5 @@
 package Variemon;
-use 5.008001;
+use 5.012;
 use strict;
 use warnings;
 use utf8;

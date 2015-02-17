@@ -1,4 +1,4 @@
-requires 'perl', '5.008001';
+requires 'perl', '5.012';
 
 requires 'Class::Accessor::Lite';
 requires 'Class::Load';
