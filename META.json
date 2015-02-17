@@ -65,13 +65,13 @@
    "release_status" : "unstable",
    "resources" : {
       "bugtracker" : {
-         "web" : "https://github.com/pokutuna/p5-Variemon/issues"
+         "web" : "https://github.com/pokutuna/p5-Valiemon/issues"
       },
-      "homepage" : "https://github.com/pokutuna/p5-Variemon",
+      "homepage" : "https://github.com/pokutuna/p5-Valiemon",
       "repository" : {
          "type" : "git",
-         "url" : "git://github.com/pokutuna/p5-Variemon.git",
-         "web" : "https://github.com/pokutuna/p5-Variemon"
+         "url" : "git://github.com/pokutuna/p5-Valiemon.git",
+         "web" : "https://github.com/pokutuna/p5-Valiemon"
       }
    },
    "version" : "0.01",
