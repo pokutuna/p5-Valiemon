@@ -64,7 +64,6 @@ sub get_default {
 
 
 ## cache
-
 sub ref_schema_cache {
     my ($self, $ref_pointer, $sub_schema_data) = @_;
     croak 'only the root schema has cache' unless $self->is_root;
@@ -78,7 +77,7 @@ sub resolve_ref {
 
     # TODO follow the standard referencing
     unless ($ref_pointer =~ qr|^#/|) {
-        croak 'This package support only single scope and `#/` referencing';
+        croak 'Valiemon only supports referencing from `#/`';
     }
 
     my $sub_schema_data = $self->root_schema->ref_schema_cache($ref_pointer) || do {
