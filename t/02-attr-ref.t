@@ -1,11 +1,8 @@
 use strict;
 use warnings;
-
 use Test::More;
 
 use Valiemon;
-
-use_ok 'Valiemon::Attributes::Ref';
 
 subtest 'validation with $ref referencing' => sub {
     my ($res, $err);

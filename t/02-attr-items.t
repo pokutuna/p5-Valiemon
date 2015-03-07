@@ -1,11 +1,8 @@
 use strict;
 use warnings;
-
 use Test::More;
 
 use Valiemon;
-
-use_ok 'Valiemon::Attributes::Items';
 
 subtest 'validate array (schema)' => sub {
     my ($res, $err);

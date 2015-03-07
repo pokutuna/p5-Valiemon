@@ -1,11 +1,9 @@
 use strict;
 use warnings;
-
 use Test::More;
 
 use Valiemon;
-
-use_ok 'Valiemon::Context';
+use Valiemon::Context;
 
 my $schema = {
     type => 'object',

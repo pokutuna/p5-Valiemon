@@ -1,11 +1,8 @@
 use strict;
 use warnings;
-
 use Test::More;
 
 use Valiemon;
-
-use_ok 'Valiemon::Attributes::MaxLength';
 
 subtest 'validate maxLength' => sub {
     my ($res, $err);

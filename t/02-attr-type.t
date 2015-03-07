@@ -1,11 +1,8 @@
 use strict;
 use warnings;
-
 use Test::More;
 
 use Valiemon;
-
-use_ok 'Valiemon::Attributes::Type';
 
 subtest 'validate type object' => sub {
     my ($res, $err);

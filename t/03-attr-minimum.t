@@ -1,11 +1,9 @@
 use strict;
 use warnings;
-
 use Test::More;
 
 use Valiemon;
 
-use_ok 'Valiemon::Attributes::Minimum';
 
 subtest 'minimum' => sub {
     my ($res, $err);

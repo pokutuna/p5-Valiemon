@@ -1,11 +1,8 @@
 use strict;
 use warnings;
-
 use Test::More;
 
 use Valiemon;
-
-use_ok 'Valiemon::Attributes::MinLength';
 
 subtest 'validate minLength' => sub {
     my ($res, $err);

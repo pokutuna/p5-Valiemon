@@ -1,11 +1,8 @@
 use strict;
 use warnings;
-
 use Test::More;
 
 use Valiemon;
-
-use_ok 'Valiemon::Attributes::Pattern';
 
 subtest 'validate pattern' => sub {
     my ($res, $error);

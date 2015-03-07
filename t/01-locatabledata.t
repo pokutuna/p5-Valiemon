@@ -1,8 +1,8 @@
 use strict;
 use warnings;
-
 use Test::More;
-use_ok 'Valiemon::LocatableData';
+
+use Valiemon::LocatableData;
 
 subtest 'new' => sub {
     my $data = Valiemon::LocatableData->new({ key => 'value' });

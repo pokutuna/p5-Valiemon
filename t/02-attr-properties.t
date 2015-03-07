@@ -1,11 +1,8 @@
 use strict;
 use warnings;
-
 use Test::More;
 
 use Valiemon;
-
-use_ok 'Valiemon::Attributes::Properties';
 
 subtest 'validate properties' => sub {
     my $v = Valiemon->new({

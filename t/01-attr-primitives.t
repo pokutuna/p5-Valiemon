@@ -1,14 +1,12 @@
 use strict;
 use warnings;
-
 use Test::More;
 
-use Valiemon;
 use JSON::XS qw();
 use JSON::PP qw();
 use Types::Serialiser;
 
-use_ok 'Valiemon::Primitives';
+use Valiemon::Primitives;
 
 subtest 'is_object' => sub {
     my $p = Valiemon::Primitives->new;
