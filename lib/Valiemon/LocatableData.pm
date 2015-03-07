@@ -39,4 +39,21 @@ sub get {
     return __PACKAGE__->new($data, [@{$self->{positions}}, $key_or_index]);
 }
 
+# apply (current, index or key, self)
+sub traverse {
+    my ($self, $cb) = @_;
+
+    if ($self->is_hash) {
+        my $keys = keys %{$self->raw};
+        $cb->($self->get($_), $_, $self) for @$keys;
+    } elsif ($self->is_array) {
+        my $size = @{$self->raw};
+        $cb->($self->get($_), $_, $self) for (0..$size);
+    } else {
+        $cb->($self, undef, $self);
+    }
+
+    return;
+}
+
 1;
