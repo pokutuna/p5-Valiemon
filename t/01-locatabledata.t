@@ -57,9 +57,37 @@ subtest 'get' => sub {
 };
 
 subtest 'pointer' => sub {
-    my $hash = Valiemon::LocatableData->new({ key => 'value' });
-    is $hash->pointer, '';
-    is $hash->get('key')->pointer, '/key';
+
+    subtest 'hash' => sub {
+        my $hash = Valiemon::LocatableData->new({ key => 'value' });
+        is $hash->pointer, '';
+        is $hash->get('key')->pointer, '/key';
+    };
+
+    subtest 'array' => sub {
+        my $array = Valiemon::LocatableData->new([1,2,3]);
+        is $array->pointer, '';
+        is $array->get('0')->pointer, '/0';
+    };
+
+    subtest 'nested' => sub {
+        my $data = Valiemon::LocatableData->new({
+            0    => 'hoge',
+            ary  => [1,2,3,4,5],
+            ''   => 'empty string key',
+            hash => { key => 'value' },
+            ' '  => { space => 'string' },
+        });
+
+        is $data->get('0')->pointer, '/0';
+        is $data->get('ary')->pointer, '/ary';
+        is $data->get('ary')->get(0)->pointer, '/ary/0';
+        is $data->get('ary')->get(3)->pointer, '/ary/3';
+        is $data->get('')->pointer, '/';
+        is $data->get('hash')->get('key')->pointer, '/hash/key';
+        is $data->get(' ')->pointer, '/ ';
+        is $data->get(' ')->get('space')->pointer, '/ /space';
+    };
 };
 
 done_testing;
