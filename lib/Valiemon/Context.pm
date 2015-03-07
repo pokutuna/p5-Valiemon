@@ -3,7 +3,7 @@ use strict;
 use warnings;
 use utf8;
 
-use Valiemon::ValidationError;
+use Valiemon::Message;
 
 use Class::Accessor::Lite (
     ro => [qw(errors positions)],
@@ -46,7 +46,7 @@ sub position {
 
 sub generate_error {
     my ($self, $attr) = @_;
-    return Valiemon::ValidationError->new($attr, $self->position);
+    return Valiemon::Message->new('error', $attr, $self->position);
 }
 
 sub in_attr ($&) {

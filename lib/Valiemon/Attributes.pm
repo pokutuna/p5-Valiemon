@@ -6,7 +6,6 @@ use utf8;
 use Carp qw(croak);
 use Exporter qw(import);
 use Class::Load qw(is_class_loaded try_load_class);
-use Valiemon::ValidationError;
 
 our @EXPORT_OK = qw(attr);
 
