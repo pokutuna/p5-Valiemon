@@ -35,17 +35,18 @@ sub validate {
 
     $context //= Valiemon::Context->new($self, $self->schema);
 
-    for my $key (keys %{$self->schema->raw}) {
-        my $attr = attr($key);
-        if ($attr) {
-            my ($is_valid, $error) = $attr->is_valid($context, $self->schema, $data);
-            unless ($is_valid) {
-                $context->push_error($error);
-                next;
-            }
-        }
-    }
+    $self->schema->traverse(sub {
+        my ($val, $key, $schema) = @_;
 
+        my $attr = attr($key);
+        return 1 unless $attr;
+
+        my ($is_valid, $error) = $attr->is_valid($context, $schema, $data);
+        unless ($is_valid) {
+            $context->push_error($error);
+            return 0;
+        }
+    });
     my $errors = $context->errors;
     my $is_valid = scalar @$errors ? 0 : 1;
     return wantarray ? ($is_valid, $errors->[0]) : $is_valid;

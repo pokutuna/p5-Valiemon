@@ -53,7 +53,7 @@ sub traverse {
     if (my $indices = $self->_indices) {
         for (@$indices) {
             my $continue = $cb->($self->get($_), $_, $self);
-            last if $continue;
+            last unless $continue;
         }
     } else {
         $cb->($self, undef, $self);
