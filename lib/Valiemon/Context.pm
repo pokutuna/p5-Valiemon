@@ -5,6 +5,8 @@ use utf8;
 
 use Valiemon::Message;
 
+use Carp::Always;
+
 use Class::Accessor::Lite (
     ro => [qw(errors positions)],
 );
@@ -18,11 +20,29 @@ sub new {
     }, $class;
 }
 
-sub con_validate { # TODO rename
-    my ($self) = @_;
+sub prims { $_[0]->{root_validator}->prims }
+
+## WIP
+sub add_error {
+    my ($self, $attr) = @_;
+    my $msg = Valiemon::Message->new(
+        'error',
+        $attr,
+        $attr->schema_fragmnet->pointer,
+    );
+    push @{$self->errors}, $msg;
 }
 
-sub prims { $_[0]->{root_validator}->prims }
+# sub add_warning {
+#     my ($self, $attr) = @_;
+#     my $msg = Valiemon::Message->new(
+#         'error',
+#         $attr,
+#         $attr->schema_fragmnet->pointer,
+#     );
+#     # TODO
+# }
+##
 
 sub push_error {
     my ($self, $error) = @_;
@@ -46,7 +66,7 @@ sub position {
 
 sub generate_error {
     my ($self, $attr) = @_;
-    return Valiemon::Message->new('error', $attr, $self->position);
+    $self->add_error($attr);
 }
 
 sub in_attr ($&) {

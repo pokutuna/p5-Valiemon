@@ -9,15 +9,15 @@ use List::MoreUtils qw(any);
 sub attr_name { 'type' }
 
 sub is_valid {
-    my ($class, $context, $schema, $data) = @_;
-    $context->in_attr($class, sub {
+    my ($self, $context, $schema, $data) = @_;
+    $context->in_attr($self, sub {
         my $types = $schema->prop('type');
 
         my $is_valid = do {
             if (ref $types eq 'ARRAY') {
-                any { $class->_check($context->prims, $_, $data) } @$types
+                any { $self->_check($context->prims, $_, $data) } @$types
             } else {
-                $class->_check($context->prims, $types, $data);
+                $self->_check($context->prims, $types, $data);
             }
         };
         $is_valid;

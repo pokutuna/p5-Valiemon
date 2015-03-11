@@ -38,9 +38,8 @@ sub validate {
     $self->schema->traverse(sub {
         my ($val, $key, $schema) = @_;
 
-        my $attr = attr($key);
+        my $attr = attr($key, $val);
         return 1 unless $attr;
-
         my ($is_valid, $error) = $attr->is_valid($context, $schema, $data);
         unless ($is_valid) {
             $context->push_error($error);
