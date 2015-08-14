@@ -40,6 +40,10 @@ sub validate {
         if ($attr) {
             my ($is_valid, $error) = $attr->is_valid($context, $schema, $data);
             unless ($is_valid) {
+                $error->set_detail(
+                    expected => $schema,
+                    actual => $data,
+                );
                 $context->push_error($error);
                 next;
             }
