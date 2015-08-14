@@ -9,6 +9,8 @@ use Valiemon::Primitives;
 use Valiemon::Context;
 use Valiemon::Attributes qw(attr);
 
+use JSON::Pointer;
+
 use Class::Accessor::Lite (
     ro => [qw(schema options pos schema_cache)],
 );
@@ -40,6 +42,10 @@ sub validate {
         if ($attr) {
             my ($is_valid, $error) = $attr->is_valid($context, $schema, $data);
             unless ($is_valid) {
+                $error->set_detail(
+                    expected => $schema,
+                    actual => $data,
+                );
                 $context->push_error($error);
                 next;
             }
@@ -89,6 +95,10 @@ sub resolve_ref {
     };
 }
 
+sub point {
+    my ($self, $document, $pointer) = @_;
+    JSON::Pointer->get($document, $pointer);
+}
 
 1;
 
@@ -124,6 +134,9 @@ Valiemon - data validator based on json schema
     # $res   => 0
     # $error => object Valiemon::ValidationError
     # $error->position => '/properties/price/type'
+
+    # shortcut for JSON Pointer
+    $validator->point($validator->schema, '/type') # => 'object'
 
 =head1 DESCRIPTION
 
