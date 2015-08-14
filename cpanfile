@@ -4,6 +4,7 @@ requires 'Clone';
 requires 'Data::Validate::URI';
 requires 'JSON::PP';
 requires 'JSON::XS';
+requires 'JSON::Pointer';
 requires 'List::MoreUtils';
 requires 'Scalar::Util';
 requires 'Test::Deep';
