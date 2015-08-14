@@ -28,6 +28,9 @@ Valiemon - data validator based on json schema
     # $error => object Valiemon::ValidationError
     # $error->position => '/properties/price/type'
 
+    # shortcut for JSON Pointer
+    $validator->point($validator->schema, '/type') # => 'object'
+
 # DESCRIPTION
 
 This module is under development!
