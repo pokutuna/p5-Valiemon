@@ -4,7 +4,7 @@ use warnings;
 use utf8;
 
 use Class::Accessor::Lite (
-    ro => [qw(attribute position)],
+    ro => [qw(attribute position expect actual)],
 );
 
 sub new {
@@ -13,6 +13,13 @@ sub new {
         attribute => $attr,
         position  => $position,
     }, $class;
+}
+
+sub set_detail {
+    my ($self, %params) = @_;
+
+    $self->{expected} = $params{expected};
+    $self->{actual} = $params{actual};
 }
 
 sub as_message {
