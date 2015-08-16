@@ -27,6 +27,8 @@ Valiemon - data validator based on json schema
     # $res   => 0
     # $error => object Valiemon::ValidationError
     # $error->position => '/properties/price/type'
+    # $error->expected => { type' => 'integer' }
+    # $error->actual   => 'hoge'
 
 # DESCRIPTION
 
