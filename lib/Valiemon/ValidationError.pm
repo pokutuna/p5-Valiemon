@@ -4,7 +4,7 @@ use warnings;
 use utf8;
 
 use Class::Accessor::Lite (
-    ro => [qw(attribute position expect actual)],
+    ro => [qw(attribute position expected actual)],
 );
 
 sub new {
