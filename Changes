@@ -2,6 +2,11 @@ Revision history for Perl extension Valiemon
 
 {{$NEXT}}
 
+0.03 2015-08-17T01:27:42Z
+
+    - fix accessor typo
+      (hitode909)
+
 0.02 2015-08-14T10:57:28Z
 
     - improve `ValidationError` object that contains `expected` & `actual` fields.
