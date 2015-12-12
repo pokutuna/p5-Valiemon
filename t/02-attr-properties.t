@@ -76,4 +76,27 @@ subtest 'validate nested properties' => sub {
     is $err->position, '/properties/name/properties/age/type';
 };
 
+subtest 'validate properties with required' => sub {
+    my ($res, $error);
+    my $v = Valiemon->new({
+        type => 'object',
+        properties => {
+            name => { type => 'string', required => 1 },
+            cv   => { type => 'string' },
+        },
+    });
+
+    ($res, $error) = $v->validate({ name => 'mio', cv => 'meshiya' });
+    ok $res;
+    is $error, undef;
+
+    ($res, $error) = $v->validate({ name => 'eve' });
+    ok $res;
+    is $error, undef;
+
+    ($res, $error) = $v->validate({ cv => 'me' });
+    ok !$res;
+    is $error->position, '/properties';
+};
+
 done_testing;

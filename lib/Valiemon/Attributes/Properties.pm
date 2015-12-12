@@ -24,17 +24,22 @@ sub is_valid {
         my $is_valid = 1;
         for my $prop (keys %$properties) {
             unless (exists $data->{$prop}) {
-                # fill in default
-                my $default = do {
-                    my $definition = $properties->{$prop}->{'$ref'} # resolve ref TODO refactor
-                        ? $context->rv->resolve_ref($properties->{$prop}->{'$ref'})
-                        : $properties->{$prop};
-                    $definition->{default};
-                };
-                if ($default) {
+                my $definition = $properties->{$prop}->{'$ref'} # resolve ref TODO refactor
+                    ? $context->rv->resolve_ref($properties->{$prop}->{'$ref'})
+                    : $properties->{$prop};
+                if (my $default = $definition->{default}) {
+                    # fill in default
                     $data->{$prop} = clone($default);
+                    # in case default value applied, skip validation for default value
+                    next;
+                } elsif ($definition->{required}) {
+                    # if required specified and default not exists, it's invalid
+                    # TODO check definition. Is it valid existing "default" and "required" in same property???
+                    $is_valid=0;
+                    last;
+                } else {
+                    next; # skip on no-required empty
                 }
-                next; # skip
             }
 
             my $sub_data = $data->{$prop};
