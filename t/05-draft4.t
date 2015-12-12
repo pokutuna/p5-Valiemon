@@ -38,7 +38,6 @@ my %todos = map {
     t/test-suite/tests/draft4/ref.json
     t/test-suite/tests/draft4/refRemote.json
     t/test-suite/tests/draft4/type.json
-    t/test-suite/tests/draft4/uniqueItems.json
 );
 
 for my $test (@tests) {
