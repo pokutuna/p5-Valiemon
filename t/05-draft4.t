@@ -28,7 +28,6 @@ my %todos = map {
     t/test-suite/tests/draft4/maxProperties.json
     t/test-suite/tests/draft4/minLength.json
     t/test-suite/tests/draft4/minProperties.json
-    t/test-suite/tests/draft4/multipleOf.json
     t/test-suite/tests/draft4/not.json
     t/test-suite/tests/draft4/oneOf.json
     t/test-suite/tests/draft4/optional/bignum.json
