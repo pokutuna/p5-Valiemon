@@ -44,7 +44,7 @@ sub run_case {
     my $coder = JSON::XS->new->ascii->pretty->allow_nonref;
 
     subtest $description => sub {
-        my $valiemon = Valiemon->new($schema);
+        my $valiemon = Valiemon->new($schema, {use_json_boolean => 1});
         for my $test (@$tests) {
             my ($description, $data, $valid) = ($test->{description}, $test->{data}, $test->{valid});
             my ($res, $error) = eval { $valiemon->validate($data); };
