@@ -28,7 +28,7 @@ sub run {
     if ($is_todo) {
         Test::More->builder->todo_start();
     }
-    $self->run_case($_, $is_todo) for @$cases;
+    $self->run_case($_) for @$cases;
     if ($is_todo) {
         Test::More->builder->todo_end();
         # TODOed test should not pass all tests, so fail if all passed
@@ -37,7 +37,7 @@ sub run {
 }
 
 sub run_case {
-    my ($self, $case, $is_todo) = @_;
+    my ($self, $case) = @_;
 
     my ($description, $schema, $tests) = ($case->{description}, $case->{schema}, $case->{tests});
 
