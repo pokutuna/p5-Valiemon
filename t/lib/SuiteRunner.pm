@@ -55,7 +55,7 @@ sub run_case {
                 fail $description;
                 diag "schema: @{[ encode_json($schema) ]}";
                 diag "data: @{[ $coder->encode($data) ]}";
-                diag "expect: @{[ $valid ? 'valid' : 'invlid' ]}";
+                diag "expect: @{[ $valid ? 'valid' : 'invalid' ]}";
             }
         }
     };
