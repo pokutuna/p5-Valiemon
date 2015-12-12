@@ -15,6 +15,7 @@ my @tests = map { glob $_ } qw(
     t/test-suite/tests/draft4/optional/*.json
 );
 
+# not.json fails because Valiemon treats 1 as string
 my %todos = map {
     ($_ => 1)
 } qw(
