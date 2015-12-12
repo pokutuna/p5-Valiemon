@@ -14,8 +14,7 @@ sub new {
 }
 
 sub run {
-    my ($self, $file) = @_;
-
+    my ($self, $file, $is_todo) = @_;
     my $content = do {
         local $/;
         open my $fh, '<', $file;
@@ -24,11 +23,17 @@ sub run {
 
     my $cases = decode_json($content);
 
-    $self->run_case($_) for @$cases;
+    if ($is_todo) {
+        Test::More->builder->todo_start();
+    }
+    $self->run_case($_, $is_todo) for @$cases;
+    if ($is_todo) {
+        Test::More->builder->todo_end();
+    }
 }
 
 sub run_case {
-    my ($self, $case) = @_;
+    my ($self, $case, $is_todo) = @_;
 
     my ($description, $schema, $tests) = ($case->{description}, $case->{schema}, $case->{tests});
 
@@ -38,7 +43,8 @@ sub run_case {
         my $valiemon = Valiemon->new($schema);
         for my $test (@$tests) {
             my ($description, $data, $valid) = ($test->{description}, $test->{data}, $test->{valid});
-            my ($res, $error) = $valiemon->validate($data);
+            my ($res, $error) = eval { $valiemon->validate($data); };
+            if ( $@ ) { fail $@; return;}
             if (!!$res == !!$valid) {
                 pass $description;
             } else {
