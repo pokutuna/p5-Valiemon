@@ -26,7 +26,6 @@ my %todos = map {
     t/test-suite/tests/draft4/dependencies.json
     t/test-suite/tests/draft4/maxLength.json
     t/test-suite/tests/draft4/maxProperties.json
-    t/test-suite/tests/draft4/minimum.json
     t/test-suite/tests/draft4/minLength.json
     t/test-suite/tests/draft4/minProperties.json
     t/test-suite/tests/draft4/multipleOf.json

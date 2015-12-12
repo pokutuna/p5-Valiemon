@@ -68,4 +68,22 @@ subtest 'minimum with object propertie' => sub {
     is $err->position, '/properties/age/minimum';
 };
 
+subtest 'ignored non-number value' => sub {
+    my ($res, $err);
+    my $v = Valiemon->new({
+        minimum => 3,
+    });
+    ($res, $err) = $v->validate(4);
+    ok $res;
+    is $err, undef;
+
+    ($res, $err) = $v->validate(2);
+    ok !$res;
+    is $err->position, '/minimum';
+
+    ($res, $err) = $v->validate("mio");
+    ok $res;
+    is $err, undef;
+};
+
 done_testing;
