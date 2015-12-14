@@ -6,6 +6,7 @@ use JSON::XS;
 
 use Test::More;
 use Valiemon;
+use List::MoreUtils qw(all);
 
 sub new {
     my ($class) = @_;
@@ -13,9 +14,9 @@ sub new {
     bless {}, $class;
 }
 
+# intended to run in subtest
 sub run {
-    my ($self, $file) = @_;
-
+    my ($self, $file, $is_todo) = @_;
     my $content = do {
         local $/;
         open my $fh, '<', $file;
@@ -24,7 +25,15 @@ sub run {
 
     my $cases = decode_json($content);
 
+    if ($is_todo) {
+        Test::More->builder->todo_start();
+    }
     $self->run_case($_) for @$cases;
+    if ($is_todo) {
+        Test::More->builder->todo_end();
+        # TODOed test should not pass all tests, so fail if all passed
+        fail "$file is marked as TODO, but all tests passed!" if all { $_->{actual_ok} } Test::More->builder->details;
+    }
 }
 
 sub run_case {
@@ -38,7 +47,8 @@ sub run_case {
         my $valiemon = Valiemon->new($schema);
         for my $test (@$tests) {
             my ($description, $data, $valid) = ($test->{description}, $test->{data}, $test->{valid});
-            my ($res, $error) = $valiemon->validate($data);
+            my ($res, $error) = eval { $valiemon->validate($data); };
+            if ( $@ ) { fail $@; return;}
             if (!!$res == !!$valid) {
                 pass $description;
             } else {

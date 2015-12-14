@@ -41,10 +41,8 @@ my %todos = map {
 );
 
 for my $test (@tests) {
-    next if $todos{$test};
-
     subtest $test => sub {
-        $runner->run($test);
+        $runner->run($test, $todos{$test});
     };
 }
 
