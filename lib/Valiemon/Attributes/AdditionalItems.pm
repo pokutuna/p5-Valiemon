@@ -9,7 +9,7 @@ use List::MoreUtils qw(all);
 use Valiemon;
 
 sub attr_name { 'additionalItems' }
-use Data::Dumper;
+
 sub is_valid {
     my ($class, $context, $schema, $data) = @_;
     return 1 unless ref $data eq 'ARRAY'; # ignore
