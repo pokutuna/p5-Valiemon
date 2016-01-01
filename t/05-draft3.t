@@ -15,7 +15,9 @@ my @tests = map { glob $_ } qw(
     t/test-suite/tests/draft3/optional/*.json
 );
 
+# "disallow", "extends" are removed in draft4.
 # "divisibleBy" is renamed to "multipleOf" in draft4.
+# Behaviour of "dependencies" changed in draft4, so some of draft3-valid schema is no longer valid.
 my %todos = map {
     ($_ => 1)
 } qw(
