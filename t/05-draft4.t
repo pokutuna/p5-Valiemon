@@ -19,7 +19,6 @@ my @tests = map { glob $_ } qw(
 my %todos = map {
     ($_ => 1)
 } qw(
-    t/test-suite/tests/draft4/additionalItems.json
     t/test-suite/tests/draft4/additionalProperties.json
     t/test-suite/tests/draft4/allOf.json
     t/test-suite/tests/draft4/anyOf.json
