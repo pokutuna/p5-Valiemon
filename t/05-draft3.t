@@ -15,6 +15,7 @@ my @tests = map { glob $_ } qw(
     t/test-suite/tests/draft3/optional/*.json
 );
 
+# "divisibleBy" is renamed to "multipleOf" in draft4.
 my %todos = map {
     ($_ => 1)
 } qw(
@@ -22,6 +23,7 @@ my %todos = map {
     t/test-suite/tests/draft3/additionalProperties.json
     t/test-suite/tests/draft3/dependencies.json
     t/test-suite/tests/draft3/disallow.json
+    t/test-suite/tests/draft3/divisibleBy.json
     t/test-suite/tests/draft3/enum.json
     t/test-suite/tests/draft3/extends.json
     t/test-suite/tests/draft3/minLength.json

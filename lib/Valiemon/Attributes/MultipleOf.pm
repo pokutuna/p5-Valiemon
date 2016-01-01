@@ -8,7 +8,6 @@ use Carp qw(croak);
 
 sub attr_name { 'multipleOf' }
 
-# Avoid use 'multipleOf' directly so that inherited Attributes "DivisibleBy" works.
 sub is_valid {
     my ($class, $context, $schema, $data) = @_;
 
