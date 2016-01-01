@@ -21,6 +21,7 @@ my @tests = map { glob $_ } qw(
 # - maxLength.json
 # - minLength.json
 # - anyOf.json
+# - oneOf.json
 # following tests fail because patternProperties are not implemented:
 # - additionalProperties.json
 # - properties.json
