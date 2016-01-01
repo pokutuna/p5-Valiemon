@@ -15,7 +15,19 @@ my @tests = map { glob $_ } qw(
     t/test-suite/tests/draft4/optional/*.json
 );
 
-# not.json fails because Valiemon treats 1 as string
+# following tests fail because Valiemon treats 1 as string:
+# - not.json
+# - type.json
+# - maxLength.json
+# - minLength.json
+# following tests fail because patternProperties are not implemented:
+# - additionalProperties.json
+# - properties.json
+# - patternProperties.json (of course)
+# following tests fail because Valiemon onnly supports only single scope:
+# - definitions.json
+# - ref.json
+# - refRemote.json
 my %todos = map {
     ($_ => 1)
 } qw(
