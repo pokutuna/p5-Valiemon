@@ -41,7 +41,6 @@ sub is_valid {
                 unless ( $class->check_all_uniqueness($context, $subschema_or_propertyset) ) {
                     croak sprintf 'All elements of value of `dependencies` must be unique at %s', $context->position;
                 }
-                # TODO uniqueness check
                 next unless exists $data->{$name};
                 next if all { exists $data->{$_} } @$subschema_or_propertyset;
                 return 0;
