@@ -5,9 +5,11 @@ use utf8;
 
 use Valiemon::ValidationError;
 
+use constant ACCESSORS => [qw(root_validator root_schema errors positions)];
 use Class::Accessor::Lite (
-    ro => [qw(root_validator root_schema errors positions)],
+    ro => ACCESSORS(),
 );
+use Clone qw(clone);
 
 sub new {
     my ($class, $validator, $schema) = @_;
@@ -16,6 +18,13 @@ sub new {
         root_schema    => $schema,
         errors         => [],
         positions      => [],
+    }, $class;
+}
+
+sub clone_from {
+    my ($class, $instance) = @_;
+    return bless {
+        map { $_ => clone($instance->$_) } @{ACCESSORS()}
     }, $class;
 }
 
