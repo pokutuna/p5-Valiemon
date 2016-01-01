@@ -32,7 +32,6 @@ my %todos = map {
     ($_ => 1)
 } qw(
     t/test-suite/tests/draft4/additionalProperties.json
-    t/test-suite/tests/draft4/allOf.json
     t/test-suite/tests/draft4/anyOf.json
     t/test-suite/tests/draft4/definitions.json
     t/test-suite/tests/draft4/maxLength.json
