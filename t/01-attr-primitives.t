@@ -57,7 +57,9 @@ subtest 'is_number' => sub {
         local $TODO = 'weak typing !!';
         ok !$p->is_number(1);
     }
-    ok !$p->is_number(undef)
+    ok !$p->is_number(undef);
+    ok !$p->is_number(JSON::XS::true);
+    ok !$p->is_number(JSON::XS::false);
 };
 
 subtest 'is_integer' => sub {
@@ -212,6 +214,11 @@ subtest 'is_equal' => sub {
     ok !$p->is_equal({}, 0);
     ok !$p->is_equal({}, 1);
     ok !$p->is_equal({}, undef);
+
+    note 'use_json_boolean';
+    my $pj = Valiemon::Primitives->new(+{ use_json_boolean => 1 });
+    ok !$pj->is_equal(JSON::XS::true, 1);
+    ok !$pj->is_equal(JSON::XS::false, 0);
 };
 
 done_testing;

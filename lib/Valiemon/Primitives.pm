@@ -31,12 +31,13 @@ sub is_string {
 
 sub is_number {
     my ($self, $obj) = @_;
-    (defined $obj && looks_like_number($obj)) ? 1 : 0;
+    # avoid from JSON::Boolean treated as number.
+    (defined $obj && ref $obj eq '' && looks_like_number($obj)) ? 1 : 0;
 }
 
 sub is_integer {
     my ($self, $obj) = @_;
-    (defined $obj && $obj =~ qr/^-?\d+$/) ? 1 : 0; # TODO find more better way
+    $self->is_number($obj) && $obj =~ qr/^-?\d+$/ ? 1 : 0; # TODO find more better way
 }
 
 sub is_boolean {
