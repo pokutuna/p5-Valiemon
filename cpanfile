@@ -4,7 +4,7 @@ requires 'Clone';
 requires 'Data::Validate::URI';
 requires 'JSON::PP';
 requires 'JSON::XS';
-requires 'List::MoreUtils';
+requires 'List::MoreUtils', '0.407';
 requires 'Scalar::Util';
 requires 'Test::Deep';
 requires 'Types::Serialiser';
