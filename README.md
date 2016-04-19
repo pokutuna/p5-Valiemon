@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/pokutuna/p5-Valiemon.svg?branch=master)](https://travis-ci.org/pokutuna/p5-Valiemon)
+[![Build Status](https://travis-ci.org/pokutuna/p5-Valiemon.svg?branch=master)](https://travis-ci.org/pokutuna/p5-Valiemon) [![Coverage Status](https://img.shields.io/coveralls/pokutuna/p5-Valiemon/master.svg?style=flat)](https://coveralls.io/r/pokutuna/p5-Valiemon?branch=master)
 # NAME
 
 Valiemon - data validator based on json schema

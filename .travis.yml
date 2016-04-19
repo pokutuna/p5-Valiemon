@@ -7,3 +7,8 @@ perl:
   - "5.20"
   - "5.22"
 sudo: false
+
+before_install:
+  - cpanm -n Devel::Cover::Report::Coveralls
+after_script:
+  - cover -test -report coveralls
