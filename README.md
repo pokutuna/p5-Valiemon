@@ -41,4 +41,4 @@ MIT
 
 # AUTHOR
 
-pokutuna <popopopopokutuna@gmail.com>
+pokutuna &lt;popopopopokutuna@gmail.com>
