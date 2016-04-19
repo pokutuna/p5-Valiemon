@@ -30,7 +30,7 @@ subtest 'anyOf' => sub {
 
     ($res, $err) = $v->validate({ age => 'secret' });
     ok !$res, 'failed both schema validation';
-    like $err->position, qr|^/anyOf|;
+    is $err->position, '/anyOf';
 };
 
 subtest 'single element in anyOf' => sub {
@@ -47,7 +47,7 @@ subtest 'single element in anyOf' => sub {
 
     ($res, $err) = $v->validate({ name => 'mari', age => 'secret' });
     ok !$res;
-    is $err->position, '/anyOf/0/properties';
+    is $err->position, '/anyOf';
 };
 
 subtest 'detect schema error' => sub {

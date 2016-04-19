@@ -24,25 +24,23 @@ sub is_valid {
     # Clone context to avoid influencing sub_validator's error to main context.
     my $is_valid = any {
         my $clone_context = Valiemon::Context->clone_from($context);
-        my ($is_partially_valid) = $clone_context->in_attr($class, sub {
+        my ($is_partially_valid, $error) = $clone_context->in_attr($class, sub {
             my $sub_v = $clone_context->sub_validator($_);
-            my $is_valid = $clone_context->in(
+            $clone_context->in(
                 $idx++, sub { $sub_v->validate($data, $clone_context); }
             );
-            # If error, keep the last error of clone_context so that
-            # main context has (one of) validation error(s).
-            unless ($is_valid) {
-                push @$errors, $clone_context->errors->[-1]
-            }
-            $is_valid;
         });
+        # If an error occured keep it so that main context will return it as main context's validation error.
+        if ($error) {
+            push @$errors, $error;
+        }
         $is_partially_valid;
     } @$anyOf;
 
     unless ($is_valid) {
-        return (0, $errors->[0]); # XXX should we keep all of errors?
+        return (0, $errors->[0]);
     }
-    return $is_valid;
+    return 1;
 }
 
 1;

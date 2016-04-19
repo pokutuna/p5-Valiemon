@@ -26,11 +26,11 @@ subtest 'oneOf' => sub {
 
     ($res, $err) = $v->validate({ codeName => 'V', realName => 'Venus' });
     ok !$res, 'only one schema should be satisfied';
-    like $err->position, qr|^/oneOf|;
+    is $err->position, '/oneOf';
 
     ($res, $err) = $v->validate({ });
     ok !$res, 'failed both schema validation';
-    like $err->position, qr|^/oneOf|;
+    is $err->position, '/oneOf';
 };
 
 subtest 'single element in oneOf' => sub {
@@ -47,7 +47,7 @@ subtest 'single element in oneOf' => sub {
 
     ($res, $err) = $v->validate({ name => 'mari', age => 'secret' });
     ok !$res;
-    is $err->position, '/oneOf/0/properties';
+    is $err->position, '/oneOf';
 };
 
 subtest 'detect schema error' => sub {
