@@ -2,6 +2,12 @@ Revision history for Perl extension Valiemon
 
 {{$NEXT}}
 
+0.04 2016-04-19T07:59:27Z
+    - accept many attributes
+      (astj)
+    - test with JSON-Schema-Test-Suite
+      (hitode909)
+
 0.03 2015-08-17T01:27:42Z
 
     - fix accessor typo

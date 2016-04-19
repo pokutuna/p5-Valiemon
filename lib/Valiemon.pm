@@ -13,7 +13,7 @@ use Class::Accessor::Lite (
     ro => [qw(schema options pos schema_cache)],
 );
 
-our $VERSION = "0.03";
+our $VERSION = "0.04";
 
 sub new {
     my ($class, $schema, $options) = @_;
