@@ -38,5 +38,4 @@ jobs:
 
       - name: test
         run: |
-          export PERL5LIB="lib:$PERL5LIB"
-          carton exec prove -r
+          carton exec prove -Ilib -r
