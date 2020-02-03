@@ -44,6 +44,6 @@ jobs:
           HARNESS_PERL_SWITCHES: -MDevel::Cover
 
       - name: coverage
-        run: |
-          echo 'repo_token: ${{ secrets.COVERALLS_REPO_TOKEN }}' > .coveralls.yml
-          cover -report coveralls
+        run: cover -report coveralls
+        envs:
+          COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
