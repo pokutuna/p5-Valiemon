@@ -28,8 +28,8 @@ jobs:
         id: cache
         with:
           path: /user/local/lib/perl5
-          key: ${{ runner.os }}-carton-${{ matrix.perl-version }}-${{ hashFiles('cpanfile') }}
-          restore-keys: ${{ runner.os }}-carton-${{ matrix.perl-version }}-
+          key: ${{ runner.os }}-perlib-${{ matrix.perl-version }}-${{ hashFiles('cpanfile') }}
+          restore-keys: ${{ runner.os }}-perlib-${{ matrix.perl-version }}-
 
       - name: install deps
         if: steps.cache.outputs.cache-hit != 'true'
