@@ -45,5 +45,5 @@ jobs:
 
       - name: coverage
         run: cover -report coveralls
-        envs:
+        env:
           COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
