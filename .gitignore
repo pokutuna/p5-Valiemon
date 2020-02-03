@@ -5,6 +5,7 @@
 /blib
 /Makefile
 
+/cpanfile.snapshot
 /carton.lock
 /.carton/
 /local/
