@@ -37,4 +37,6 @@ jobs:
           cpanm -n Devel::Cover::Report::Coveralls
 
       - name: test
-        run: carton exec prove -r
+        run: |
+          export PERL5LIB="lib:$PERL5LIB"
+          carton exec prove -r
