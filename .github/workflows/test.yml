@@ -46,4 +46,4 @@ jobs:
       - name: coverage
         run: |
           echo 'repo_token: ${{ secrets.COVERALLS_REPO_TOKEN }}' > .coveralls.yml
-          cover -test -report coveralls
+          cover -report coveralls
