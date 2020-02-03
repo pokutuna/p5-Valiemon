@@ -27,19 +27,16 @@ jobs:
       - uses: actions/cache@v1
         id: cache
         with:
-          path: local
+          path: /user/local/lib/perl5
           key: ${{ runner.os }}-carton-${{ matrix.perl-version }}-${{ hashFiles('cpanfile') }}
           restore-keys: ${{ runner.os }}-carton-${{ matrix.perl-version }}-
 
-      - name: install carton
-        run: cpanm -n Carton
-
       - name: install deps
         if: steps.cache.outputs.cache-hit != 'true'
-        run: carton install
+        run: cpanm --installdeps .
 
       - name: test
-        run: carton exec prove -Ilib -r
+        run: prove -Ilib -r
 
       - name: coverage
         run: |
