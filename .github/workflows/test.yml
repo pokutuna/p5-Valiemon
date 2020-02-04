@@ -27,23 +27,25 @@ jobs:
       - uses: actions/cache@v1
         id: cache
         with:
-          path: /user/local/lib/perl5
-          key: ${{ runner.os }}-perlib-${{ matrix.perl-version }}-${{ hashFiles('cpanfile') }}
-          restore-keys: ${{ runner.os }}-perlib-${{ matrix.perl-version }}-
+          path: /usr/local/lib/perl5
+          key: ${{ runner.os }}-perl-${{ matrix.perl-version }}-${{ hashFiles('cpanfile') }}
 
       - name: install deps
         if: steps.cache.outputs.cache-hit != 'true'
         run: |
           cpanm --installdeps .
-          cpanm -n Devel::Cover
-          cpanm -n Devel::Cover::Report::Coveralls
+          cpanm -n Devel::Cover Devel::Cover::Report::Coveralls
 
       - name: test
         run: prove -Ilib -r
         env:
           HARNESS_PERL_SWITCHES: -MDevel::Cover
 
+      # 2020-02-04 Devel::Cover::Report::Coveralls doesn't comment on pull-request.
+      # It seems to need to send `service_pull_request` to coveralls.
       - name: coverage
-        run: cover -report coveralls
+        run: |
+          cpanm -n --reinstall Devel::Cover
+          cover -report coveralls
         env:
           COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
