@@ -27,7 +27,7 @@ jobs:
       - uses: actions/cache@v1
         id: cache
         with:
-          path: /user/local/lib/perl5
+          path: /usr/local/lib/perl5
           key: ${{ runner.os }}-perlib-${{ matrix.perl-version }}-${{ hashFiles('cpanfile') }}
           restore-keys: ${{ runner.os }}-perlib-${{ matrix.perl-version }}-
 
