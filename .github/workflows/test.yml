@@ -29,12 +29,12 @@ jobs:
         with:
           path: /usr/local/lib/perl5
           key: ${{ runner.os }}-perl-${{ matrix.perl-version }}-${{ hashFiles('cpanfile') }}
-          restore-keys: ${{ runner.os }}-perl-${{ matrix.perl-version }}-
 
       - name: install deps
         if: steps.cache.outputs.cache-hit != 'true'
         run: |
           cpanm --installdeps .
+          cpanm -n Devel::Cover Devel::Cover::Report::Coveralls
 
       - name: test
         run: prove -Ilib -r
@@ -45,7 +45,7 @@ jobs:
       # It seems to need to send `service_pull_request` to coveralls.
       - name: coverage
         run: |
-          cpanm -n Devel::Cover Devel::Cover::Report::Coveralls
+          cpanm -n --reinstall Devel::Cover
           cover -report coveralls
         env:
           COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
