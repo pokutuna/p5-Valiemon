@@ -35,6 +35,12 @@ subtest 'date-time' => sub {
         is $error->position, '/format';
     };
 
+    subtest 'invalid(suffix)' => sub {
+        ($res, $error) = $v->validate('2014-01-01T00:00:00Zx');
+        ok !$res;
+        is $error->position, '/format';
+    };
+
     subtest 'invalid(range)' => sub {
         TODO : {
             local $TODO = 'RFC3339 range of value';
