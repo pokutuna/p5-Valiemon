@@ -34,7 +34,7 @@ sub is_valid {
 sub _validate_date_time {
     my ($data) = @_;
     # TODO: check range of value (date-month must be `01-12` etc...)
-    $data =~ /\A\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d+)?(Z|[+-]\d{2}:\d{2})/ ? 1 :  0;
+    $data =~ /\A\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d+)?(Z|[+-]\d{2}:\d{2})\z/ ? 1 :  0;
 }
 
 sub _validate_uri {
